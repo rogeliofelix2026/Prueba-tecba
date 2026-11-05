@@ -1,0 +1,7 @@
+# The deployable app lives in FRONTEND/app (Next.js). Without this file Netlify
+# published the repository root, which has no index page, so every URL returned 404.
+[build]
+  base = "FRONTEND/app"
+  # Install dependencies first: the prebuild step needs maplibre-gl from node_modules.
+  command = "npm install --include=dev && npm run build"
+  publish = ".next"
