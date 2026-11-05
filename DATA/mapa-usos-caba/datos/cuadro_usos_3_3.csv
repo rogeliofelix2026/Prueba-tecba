@@ -1,0 +1,326 @@
+﻿Código;Categoría;Rubro;Nivel;Mixtura 1 (Baja);Mixtura 2 (Media A);Mixtura 3 (Media B);Mixtura 4 (Alta);Estacionamiento;Bicicleta;Carga y descarga;Observaciones
+1.1;Comercial;Comercio mayorista sin depósito;descripción;NO;NO;1000;2000;-;-;IIIa;Sólo exposición, la carga y descarga no podrá ser optativa
+1.2;Comercial;Comercio mayorista con depósito. Art. 3.13.5. b);descripción;NO;NO;SCPC;SCPC;-;-;IIIb;Ver art. 3.13.1
+1.3;Comercial;Comercio mayorista con depósito-Art. 3.13.5. a);descripción;NO;NO;1000;1500;-;-;IIIa;Depósito que l no supera e 60% de la superficie
+1.3.1;Comercial;Local de venta de productos perecederos;rubro;NO;NO;500;500;10;-;IIIa;
+1.4;Comercial;Comercio minorista de productos de abasto y alimenticios;descripción;100;200;200;500;-;-;-;
+1.4.1;Comercial;Local de venta de leña y carbón de leña;rubro;100;200;200;500;-;-;-;Sólo como uso complementario
+1.4.2;Comercial;Local de venta de golosinas envasadas (kiosco);rubro;SI;SI;SI;SI;-;-;-;
+1.4.3;Comercial;Maxikiosco;rubro;100;200;200;500;-;-;-;
+1.4.4;Comercial;Local de venta de productos alimenticios y/o bebidas (excluido feria, mercado, supermercado y autoservicio);rubro;200;200;1000;1000;-;-;-;
+1.5;Comercial;Alimentación en general y gastronomía;descripción;200;750;SI;SI;26;b;-;No incluye música y canto, espectáculos en vivo, etc. Ver art. 3.6.1.1
+1.5.1;Comercial;Patio gastronómico;rubro;C;C;SI;SI;-;c;IIIb;No incluye música y canto, espectáculos en vivo, etc. Ver art. 3.6.3.1.5
+1.5.2;Comercial;Mercado gastronómico;rubro;C;500C;SI;SI;-;c;IIIb;Ver art. 3.6.3.1.5
+1.5.3;Comercial;Alimentación en general para llevar;rubro;100;500;SI;SI;-;h;-;
+1.6;Comercial;Comercio minorista alimenticios por sistema de venta;descripción;NO;NO;1500;1500;-;b;IIIb;
+1.6.1;Comercial;Supermercado;rubro;NO;1500 SA;1500C;1500C;11;b;IIIa;Ver art. 3.6.3.1.4
+1.6.2;Comercial;Supermercado total;rubro;NO;NO;C;C;11;b;VII;Ver art. 3.6.3.1.4
+1.6.3;Comercial;Autoservicio de productos alimenticios;rubro;C;1200/SA;1200/SA;1500;9;a;IIIb;
+1.6.4;Comercial;Autoservicio de proximidad;rubro;200;200;200;200;-;-;-;
+1.6.5;Comercial;Mercado;rubro;NO;1500/SA;1500;1500C;-;-;IIIb;Ver art. 3.6.3.1.5
+1.7;Comercial;Comercio minorista no alimenticios por sistema de venta;descripción;NO;NO;1500;1500;-;-;VII;
+1.7.1;Comercial;Paseo de Compras/Grandes Tiendas;rubro;NO;2500 SA;2500;2500C;11;b;IIIa;Ver art. 3.6.3.1.2
+1.7.2;Comercial;Galería Comercial;rubro;NO;2500 SA;2500;2500;-;-;IIIa;Ver art. 3.6.3.1.1 En ningún caso el comercio mayorista no podrá eximirse de CyD
+1.7.3;Comercial;Centro de Compras;rubro;NO;NO;NO;NO;-;-;-;NPC Ver art. 3.6.3.1.3
+1.7.4;Comercial;Autoservicio de productos no alimenticios;rubro;C;1200/SA;1200/SA;1500;40;a;IIIb;
+1.8;Comercial;Comercio minorista excluido comestibles como uso principal;descripción;100;200;2500;1500;-;-;-;Ver art 3.6.1.2.9.
+1.8.1;Comercial;Herboristería;rubro;200;200;1000;1000;-;-;-;
+1.8.2;Comercial;Farmacia;rubro;200;500;1500;1500;-;-;-;
+1.8.3;Comercial;Local de venta de papeles pintados/ alfombras / artículos de decoración;rubro;200;500;1500;1500;-;-;IIIa;
+1.8.4;Comercial;Local de venta de antigüedades, objetos de arte;rubro;200;500;2500;2500;-;-;IIIa;
+1.8.5;Comercial;Local de venta de materiales de construcción clase I (exposición y venta);rubro;200;500;2000;2000;-;-;-;Sin depósito
+1.8.6;Comercial;Local de venta de materiales de construcción clase II (con depósito, sin materiales a granel);rubro;NO;NO;2500;2500;3;-;I;UCDI - Ver art. 3.4
+1.8.7;Comercial;Local de venta de materiales de construcción clase III (sin exclusiones);rubro;NO;NO;2500;2500;3;-;IIIb;UCDI - Ver art. 3.4
+1.8.8;Comercial;Local de venta de semillas, plantas, artículos y herramientas para jardinería;rubro;200;500;SI;SI;-;-;-;
+1.8.9;Comercial;Local de venta de animales domésticos;rubro;C;200C;1000;500;-;-;IIIa;
+1.8.10;Comercial;Local de venta de artículos para el hogar y afines;rubro;200;500;2500;2500;-;-;IIIa;
+1.8.11;Comercial;Local de venta de artículos publicitarios;rubro;200;500;2500;2500;-;-;IIIa;
+1.8.12;Comercial;Tabaquería, cigarrería;rubro;200;200;500;500;-;-;-;
+1.8.13;Comercial;Cerrajería;rubro;200;500;1500;1500;-;-;-;Ver art 3.6.1.2.1
+1.8.14;Comercial;Óptica y fotografía;rubro;200;500;1500;1500;-;-;-;
+1.8.15;Comercial;Local de venta de símbolos patrios, distintivos, medallas y trofeos;rubro;200;500;SI;SI;-;-;-;
+1.8.16;Comercial;Local de venta de vidrios y espejos;rubro;200;500;2500;2500;-;-;-;Ver art 3.6.1.2.2
+1.8.17;Comercial;Rodados en general, bicicletas, motos;rubro;200;500;2500;2500;-;-;-;
+1.8.18;Comercial;Relojería y joyería;rubro;200;500;1500;1500;-;-;-;
+1.8.19;Comercial;Instrumentos de precisión, científicos, musicales, ortopedia;rubro;200;500;1500;1500;-;-;-;
+1.8.20;Comercial;Armería;rubro;NO;C;1500;1500;-;-;-;Ver art 3.6.1.2.3
+1.8.21;Comercial;Metales y piedras preciosas (compraventa);rubro;200;500;SI;SI;-;-;-;Ver art. 3.4 Ver art 3.6.1.2.4
+1.8.22;Comercial;Almacén naval;rubro;NO;NO;SI;SI;-;-;VI;
+1.8.23;Comercial;Ferretería industrial, máquinas, herramientas, motores industriales y agrícolas;rubro;NO;NO;SI;SI;-;-;II;
+1.8.24;Comercial;Casa de remates;rubro;200;500;SI;SI;-;-;IIIa;
+1.8.25;Comercial;Local de venta de toldos y accesorios;rubro;200;500;1500;1500;-;-;IIIa;
+1.8.26;Comercial;Local de venta de muebles en general productos de madera y mimbre, metálicos-colchones y afines;rubro;200;500;SI;SI;-;-;IIIa;
+1.8.27;Comercial;Local de venta de elementos contra incendio, matafuegos y artículos para seguridad industrial;rubro;200;500;SI;SI;-;-;IIIa;
+1.8.28;Comercial;Local de venta de artículos y equipamiento médico, hospitalario y farmacéutico;rubro;200;500;SI;SI;-;-;IIIa;
+1.8.29;Comercial;Local de venta de artículos y aparatos para equipamiento comercial y de servicio;rubro;200;500;SI;SI;-;-;IIIa;
+1.8.30;Comercial;Local de venta de repuestos y accesorios para automotores;rubro;NO;1500 SA;2500;2500;-;-;IIIb;Ver art 3.6.1.2.5
+1.8.31;Comercial;Automotores, embarcaciones, aviones;rubro;NO;1000 SA;SI;SI;-;-;IIIb;Ver art 3.6.1.2.6
+1.8.32;Comercial;Pinturería;rubro;NO;500SA;2500;2500;-;-;IIIa;UCDI - Ver art. 3.4
+1.8.33;Comercial;Local de venta de sustancias químicas, caucho y plásticos;rubro;NO;NO;1500;1500;-;-;IIIa;UCDI - Ver art. 3.4
+1.8.34;Comercial;Local de venta de lubricantes y aditivos para automotores;rubro;NO;NO;1000;500;-;-;-;Sin colocación
+1.8.35;Comercial;Vivero;rubro;200;500;2500;2500;-;-;IIIa;
+1.8.36;Comercial;Local de venta de reactivos y aparatos para laboratorios de análisis clínicos o industriales;rubro;NO;NO;1000;500;-;-;IIIa;
+1.8.37;Comercial;Gas envasado;rubro;NO;NO;C;NO;-;-;I;UCDI - Ver art. 3.4
+1.8.38;Comercial;Gas envasado, distribución hasta 100kgs;rubro;NO;NO;C;NO;-;-;IIIa;UCDI - Ver art. 3.4
+2.1;Diversiones públicas, cultura, culto y recreación;Local de representación;descripción;C;C;SI;SI;-;-;-;
+2.1.1;Diversiones públicas, cultura, culto y recreación;Espacio cultural independiente (hasta 500 m²);rubro;SI;SI;SI;SI;-;n;-;Ver art 3.6.1.1.6
+2.1.2;Diversiones públicas, cultura, culto y recreación;Centro Cultural A (hasta 150 personas y 300 m²);rubro;SI;SI;SI;SI;-;n;-;Ver art 3.6.1.1.6
+2.1.3;Diversiones públicas, cultura, culto y recreación;Centro Cultural B (hasta 300 personas y 500 m²);rubro;NO;SI;SI;SI;-;n;-;Ver art 3.6.1.1.6
+2.1.4;Diversiones públicas, cultura, culto y recreación;Centro Cultural C (hasta 500 personas y 1000 m²);rubro;NO;C;SI;SI;-;n;-;Ver art 3.6.1.1.6
+2.1.5;Diversiones públicas, cultura, culto y recreación;Centro Cultural D (más de 500 personas y 1000 m²);rubro;NO;C;SI;SI;-;n;-;Ver art 3.6.1.1.6
+2.1.6;Diversiones públicas, cultura, culto y recreación;Museo Clase I. Permanentes y temporarias;rubro;C;500C;SI;SI;12;n;-;
+2.1.7;Diversiones públicas, cultura, culto y recreación;Museo Clase II. Condicionado por el inmueble;rubro;C;500C;SI;SI;12;n;-;
+2.1.8;Diversiones públicas, cultura, culto y recreación;Galería de arte;rubro;200;500;2500;2500;-;n;-;
+2.1.9;Diversiones públicas, cultura, culto y recreación;Centro de exposiciones/ centro de eventos;rubro;NO;NO;C;C;34;d;VII;
+2.1.10;Diversiones públicas, cultura, culto y recreación;Teatro independiente;rubro;NO;500;SI;SI;-;n;-;Ver art 3.6.1.1.8
+2.1.11;Diversiones públicas, cultura, culto y recreación;Teatro;rubro;200;500;SI;SI;2;f;-;Ver art. 7.2.10.5
+2.1.12;Diversiones públicas, cultura, culto y recreación;Cine;rubro;200;500;SI;SI;2;f;-;
+2.1.13;Diversiones públicas, cultura, culto y recreación;Salón de conferencias, sala audiovisual;rubro;200;500;SI;SI;12;f;IIIa;
+2.1.14;Diversiones públicas, cultura, culto y recreación;Salón de exposiciones;rubro;200;500;SI;SI;12;n;IIIa;
+2.1.15;Diversiones públicas, cultura, culto y recreación;Autocine;rubro;NO;C;C;C;34;d;VII;
+2.1.16;Diversiones públicas, cultura, culto y recreación;Acuario;rubro;NO;NO;NO;NO;-;-;-;NPC
+2.1.17;Diversiones públicas, cultura, culto y recreación;Jardín Zoológico;rubro;NO;NO;NO;NO;-;-;-;NPC
+2.2;Diversiones públicas, cultura, culto y recreación;Local de lectura;descripción;SI;SI;SI;SI;-;-;-;
+2.2.1;Diversiones públicas, cultura, culto y recreación;Biblioteca local;rubro;SI;SI;SI;SI;4;c;-;
+2.3;Diversiones públicas, cultura, culto y recreación;Local deportivo;descripción;C;C;SI;SI;-;-;-;
+2.3.1;Diversiones públicas, cultura, culto y recreación;Club social, cultural y deportivo con o sin instalaciones al aire libre;rubro;NO;C;SI;SI;27;p;-;"Ver arts. 3.6.1.2.8.; 3.9; 3.14.8.1 e) y 7.2.10.3.1.2"
+2.3.2;Diversiones públicas, cultura, culto y recreación;Clubes de Barrio;rubro;SI;SI;SI;SI;27;p;-;Ver arts. 3.6.1.2.8. y 7.2.10.3.2
+2.3.3;Diversiones públicas, cultura, culto y recreación;Gimnasio;rubro;500C;1000;SI;SI;-;p;-;
+2.3.4;Diversiones públicas, cultura, culto y recreación;Cancha de tenis/ paddle/frontón con raqueta (squash);rubro;C;C;SI;SI;36;o;-;Ver art 3.6.1.9
+2.3.5;Diversiones públicas, cultura, culto y recreación;Cancha de minifutbol y/o futbol cinco, futbol, básquet, hockey, volleyball, handball, etc;rubro;NO;C;C;C;34;d;-;
+2.3.6;Diversiones públicas, cultura, culto y recreación;Cancha de Golf;rubro;NO;NO;C;C;34;d;-;
+2.3.7;Diversiones públicas, cultura, culto y recreación;Práctica de Golf;rubro;C;C;SI;SI;36;e;-;
+2.3.8;Diversiones públicas, cultura, culto y recreación;Natatorio;rubro;500C;1000;SI;SI;17;e;-;
+2.3.9;Diversiones públicas, cultura, culto y recreación;Tiro, polígono acústicamente aislado;rubro;NO;NO;C;C;-;-;-;
+2.3.10;Diversiones públicas, cultura, culto y recreación;Local de actividades físicas recreativas;rubro;200/SA;SI;SI;SI;-;n;-;
+2.3.11;Diversiones públicas, cultura, culto y recreación;Estudio de danza;rubro;200/SA;SI;SI;SI;-;n;-;
+2.4;Diversiones públicas, cultura, culto y recreación;Local de fiesta o diversión;descripción;NO;NO;C;C;-;-;-;
+2.4.1;Diversiones públicas, cultura, culto y recreación;Casa o local de fiestas privadas infantiles;rubro;200;500;1000;1000;-;-;-;Ver art. 3.6.1.1.2, Ver art 3.6.3.1.8
+2.4.2;Diversiones públicas, cultura, culto y recreación;Casa o local de fiestas privadas;rubro;NO;NO;C;C;-;-;-;---
+2.4.3;Diversiones públicas, cultura, culto y recreación;Calesita/Carrusel;rubro;SI;SI;SI;SI;-;-;-;
+2.4.4;Diversiones públicas, cultura, culto y recreación;Salón de Milonga;rubro;C;C;SI;SI;-;-;-;
+2.4.5;Diversiones públicas, cultura, culto y recreación;Local de música, canto y variedades;rubro;NO;NO;C;C;17;n;-;
+2.4.6;Diversiones públicas, cultura, culto y recreación;Club de música en vivo. Hasta 300 espectadores y 500m2, conciertos musicales en vivo;rubro;NO;NO;SI;SI;-;q;-;Ver art 3.6.1.1.10
+2.4.7;Diversiones públicas, cultura, culto y recreación;Local de baile 1000m2;rubro;NO;NO;NO;C;-;-;-;
+2.4.8;Diversiones públicas, cultura, culto y recreación;Local de baile 1000m2;rubro;NO;NO;NO;C;-;-;-;
+2.4.9;Diversiones públicas, cultura, culto y recreación;Local de baile complementarias (20% de superficie total);rubro;NO;NO;C;C;-;-;-;Ver art. 7.2.10.4
+2.4.10;Diversiones públicas, cultura, culto y recreación;Juego de bolos, billar, dardos, tenis de mesa, hockey de mesa, futbol de mesa;rubro;NO;SA;SI;SI;31;n;-;
+2.4.11;Diversiones públicas, cultura, culto y recreación;Pista patinaje y/o skate. Sala patinaje sobre hielo;rubro;NO;SA;SI;SI;31;n;-;Ver art 3.6.1.1.3
+2.4.12;Diversiones públicas, cultura, culto y recreación;Juegos de mesa y manuales;rubro;100;500;SI;SI;-;n;-;
+2.4.13;Diversiones públicas, cultura, culto y recreación;Juegos psicomotrices;rubro;NO;500SA;1000;1000C;-;n;-;
+2.4.14;Diversiones públicas, cultura, culto y recreación;Feria infantil;rubro;C;SI;SI;SI;-;-;-;
+2.4.15;Diversiones públicas, cultura, culto y recreación;Centro de entretenimiento familiar;rubro;NO;NO;1000;1000C;-;-;-;Ver art 3.6.1.1.4
+2.4.16;Diversiones públicas, cultura, culto y recreación;Peña;rubro;NO;C;SI;SI;-;-;-;
+2.4.17;Diversiones públicas, cultura, culto y recreación;Circo Rodante (uso transitorio);rubro;NO;NO;C;C;-;-;-;
+2.4.18;Diversiones públicas, cultura, culto y recreación;Colonia de vacaciones;rubro;SI;SI;SI;SI;-;-;-;Sólo compatible con usos específicos según art. 3.6.1.2
+2.5;Diversiones públicas, cultura, culto y recreación;Local de juego;descripción;NO;NO;NO;C;-;-;-;
+2.5.1;Diversiones públicas, cultura, culto y recreación;Sala de apuesta hípica;rubro;NO;NO;NO;NO;-;-;-;NPC
+2.5.2;Diversiones públicas, cultura, culto y recreación;Sala de loto, loto familiar o loto de salón;rubro;NO;NO;NO;C;7;c;-;Ver art 3.6.1.1.5
+2.5.3;Diversiones públicas, cultura, culto y recreación;Sala de bingo;rubro;NO;NO;NO;NO;-;-;-;NPC
+2.6;Diversiones públicas, cultura, culto y recreación;Local de culto;descripción;C;C;C;C;-;-;-;
+3.1;Educación;Establecimientos educacionales;descripción;C;C;C;C;-;-;-;
+3.1.1;Educación;Jardín maternal Gestión estatal;rubro;SI;SI;SI;SI;-;-;-;
+3.1.2;Educación;Jardín maternal. Gestión privada;rubro;SI;SI;SI;SI;-;l;-;
+3.1.3;Educación;Jardín de infantes. Gestión estatal;rubro;SI;SI;SI;SI;-;-;-;
+3.1.4;Educación;Jardín de infantes. Gestión privada;rubro;SI;SI;SI;SI;-;l;-;
+3.1.5;Educación;Escuela infantil. Gestión estatal;rubro;SI;SI;SI;SI;-;-;-;
+3.1.6;Educación;Escuela infantil. Gestión privada;rubro;SI;SI;SI;SI;-;l;-;
+3.1.7;Educación;Centro de primera infancia;rubro;SI;SI;SI;SI;-;-;-;
+3.1.8;Educación;Escuela primaria. Gestión estatal;rubro;SI;SI;SI;SI;-;-;-;
+3.1.9;Educación;Escuela primaria. Gestión privada;rubro;C;1000C;SI;SI;-;l;-;
+3.1.10;Educación;Escuela primaria modalidad adultos. Gestión estatal;rubro;C;SI;SI;SI;-;r;-;
+3.1.11;Educación;Escuela primaria modalidad adultos. Gestión privada;rubro;C;1000C;SI;SI;-;r;-;
+3.1.12;Educación;Escuela de educación especial -con formación laboral-con internado. Gestión privada;rubro;C;SI;SI;SI;-;l;-;
+3.1.13;Educación;Escuela de educación especial -con formación laboral-con internadoGestión estatal;rubro;SI;SI;SI;SI;-;-;-;
+3.1.14;Educación;Escuela de educación especial con formación laboral sin Internado. Gestión estatal;rubro;SI;SI;SI;SI;-;-;-;
+3.1.15;Educación;Escuela de educación especial -con formación laboral-sin Internado. Gestión Privada;rubro;C;SI;SI;SI;-;l;-;
+3.1.16;Educación;Escuela de educación especial -sin formación laboral-con Internado. Gestión estatal;rubro;SI;SI;SI;SI;-;-;-;
+3.1.17;Educación;Escuela de educación especial -sin formación laboral-con Internado. Gestión privada;rubro;C;1000C;SI;SI;-;l;-;
+3.1.18;Educación;Escuela de educación especial -sin formación laboral-sin internado. Gestión estatal;rubro;SI;SI;SI;SI;-;-;-;
+3.1.19;Educación;Escuela de educación especial -sin formación laboral-sin internado. Gestión privada;rubro;C;1000C;SI;SI;-;l;-;
+3.1.20;Educación;Escuela, colegio con internado;rubro;C;1000C;SI;SI;-;l;-;
+3.1.21;Educación;Escuela secundaria. Gestión estatal;rubro;C;SI;SI;SI;-;-;-;
+3.1.22;Educación;Escuela secundaria. Gestión privada;rubro;C;1000C;SI;SI;-;r;-;
+3.1.23;Educación;Escuela secundaria modalidad adultos. Gestión estatal;rubro;C;SI;SI;SI;-;-;-;
+3.1.24;Educación;Escuela secundaria modalidad adultos. Gestión Privada;rubro;C;1000C;SI;SI;-;r;-;
+3.1.25;Educación;Establecimiento universitario;rubro;C;C;SI;SI;17;r;-;Ver art. 3.14.8.1. d)
+3.1.26;Educación;Instituto de educación superior;rubro;C;500C;SI;SI;-;c;-;
+3.1.27;Educación;Establecimiento educación a distancia con exámenes presenciales;rubro;C;500C;SI;SI;-;c;-;
+3.1.28;Educación;Establecimiento educación a distancia sin exámenes presenciales;rubro;C;500C;SI;SI;-;c;-;
+3.1.29;Educación;Instituto de Enseñanza para niños, niñas y adolescentes;rubro;500C;SI;SI;SI;-;c;-;
+3.1.30;Educación;Instituto de Enseñanza para adultos;rubro;500C;SI;SI;SI;-;c;-;
+3.1.31;Educación;Instituto de investigación sin laboratorio;rubro;NO;C;SI;SI;17;r;-;
+3.1.32;Educación;Instituto de investigación con laboratorio;rubro;NO;C;C;C;17;r;-;
+4.1;Alojamiento;Alojamiento no turístico;descripción;C;SI;SI;SI;-;-;-;
+4.1.1;Alojamiento;Casa de pensión;rubro;C;SI;SI;SI;-;j;-;
+4.1.2;Alojamiento;Hotel Familiar (con o sin servicio de comida);rubro;C;SI;SI;SI;-;j;IIIa;La referencia de Carga y Descarga aplican solo si tiene servicio de comida.
+4.1.3;Alojamiento;Hotel residencial;rubro;C;SI;SI;SI;-;j;IIIa;La referencia de Carga y Descarga aplican solo si tiene servicio de comida.
+4.1.4;Alojamiento;Centro de alojamiento temporal y práctica de deportes, disciplinas, juegos en línea y creación de contenido audiovisual;rubro;C;SI;SI;SI;-;j;-;Ver art. 3.6.1.1.14.
+4.2;Alojamiento;Alojamiento turístico hotelero;descripción;C;SI;SI;SI;34;d;VII;Ver art 3.6.1.1.12
+4.2.1;Alojamiento;Apart hotel (Apart-residencial) 1 y 2 estrellas;rubro;C;SI;SI;SI;28b;j;IIIa;Ver art 3.6.1.1.12
+4.2.2;Alojamiento;Apart hotel (Apart-residencial) 3 estrellas;rubro;C;SI;SI;SI;28b;j;IIIa;Ver art 3.6.1.1.12
+4.2.3;Alojamiento;Hotel 1 y 2 estrellas;rubro;C;SI;SI;SI;28b;j;IIIa;Ver art 3.6.1.1.12
+4.2.4;Alojamiento;Hotel 3 estrellas;rubro;C;SI;SI;SI;28b;j;IIIa;Ver art 3.6.1.1.12
+4.2.5;Alojamiento;Hotel 4 y 5 estrellas;rubro;C;C;SI;SI;28b;j;IIIa;Ver art 3.6.1.1.12
+4.2.6;Alojamiento;Hotel Boutique;rubro;C;SI;SI;SI;28b;j;IIIa;Ver art 3.6.1.1.12
+4.3;Alojamiento;Alojamiento turístico para hotelero;descripción;C;SI;SI;SI;28a;j;I;Ver art 3.6.1.1.12
+4.3.1;Alojamiento;Albergue Turístico/ Hostel Estándar y Superior;rubro;C;SI;SI;SI;28a;j;IIIa;Ver art 3.6.1.1.12
+4.3.2;Alojamiento;Hostal / Bed & Breakfast/ Cama y Desayuno Estándar y Superior;rubro;C;SI;SI;SI;28a;j;IIIa;Ver art 3.6.1.1.12
+4.3.3;Alojamiento;Hospedaje Turístico / Residencial Turístico Categoría A y B;rubro;C;SI;SI;SI;-;-;-;Ver art 3.6.1.1.12
+4.3.4;Alojamiento;Albergue transitorio;rubro;C;C;C;C;28a;e;I;Ver art. 3.4., ver art 3.6.1.1.12
+5.1;Sanidad;Establecimientos de sanidad-Nivel básico;descripción;SI;SI;SI;SI;-;-;-;
+5.1.1;Sanidad;Consultorio veterinario;rubro;150;SI;SI;SI;-;-;-;
+5.1.2;Sanidad;Consultorio profesional (anexo a vivienda);rubro;SI;SI;SI;SI;-;-;-;
+5.1.3;Sanidad;Consultorio de Salud Mental;rubro;200;SI;SI;SI;-;-;-;
+5.2;Sanidad;Establecimientos de sanidad-Nivel centro local;descripción;C;C;C;C;34;d;VII;Ver art. 3.14.8.3
+5.2.1;Sanidad;Casa de cuidados paliativos;rubro;C;SI;SI;SI;-;-;-;
+5.2.2;Sanidad;Consultorio profesional;rubro;200;SI;SI;SI;31;c;-;
+5.2.3;Sanidad;Consultorio de reproducción medicamente asistida;rubro;NO;200;SI;SI;31;c;-;
+5.2.4;Sanidad;Centro de Salud y Acción Comunitaria de la Red Sanitaria de la Ciudad de Buenos Aires;rubro;SI;SI;SI;SI;20;c;IIIa;
+5.2.5;Sanidad;Centro médico u odontológico;rubro;C;500C;SI;SI;20;e;IIIa;Ver art. 3.14.8.3
+5.2.6;Sanidad;Servicio médico u odontológico (urgencia);rubro;C;500C;SI;SI;20;e;IIIa;Ver art. 3.14.8.3
+5.2.7;Sanidad;Centro de Especialidades Médicas Ambulatorias Regional de la Red Sanitaria de la Ciudad de Buenos Aires;rubro;C;SI;SI;SI;23;k;IIIb;
+5.2.8;Sanidad;Centro de salud mental-Atención Ambulatoria;rubro;C;200C;SI;500;20;e;-;
+5.2.9;Sanidad;Centro de salud mental-Hospital de Día;rubro;C;200C;SI;500;20;e;-;
+5.2.10;Sanidad;Centro de salud mental-Centro de Día;rubro;C;200C;SI;500;20;e;-;
+5.2.11;Sanidad;Residencia de salud mental-Residencia asistida de bajo nivel de apoyo;rubro;C;C;SI;SI;20;e;-;
+5.2.12;Sanidad;Residencia de salud mental-Residencia asistida de nivel medio de apoyo;rubro;C;C;SI;SI;20;e;-;
+5.2.13;Sanidad;Residencia de salud mental-Residencia asistida de alto nivel de apoyo;rubro;C;C;SI;SI;20;e;-;
+5.2.14;Sanidad;Emprendimiento Socioproductivo;rubro;SI;SI;SI;SI;20;e;-;
+5.2.15;Sanidad;Servicio de salud mental en el primer nivel de atención;rubro;C;SI;SI;SI;20;e;-;
+5.2.16;Sanidad;Instituto de salud mental;rubro;C;SI;SI;SI;20;e;-;
+5.2.17;Sanidad;Clínica;rubro;NO;AMP12;AMP12;AMP12;23;k;IIIb;Ver art. 3.14.8.3
+5.2.18;Sanidad;Sanatorio;rubro;NO;NO;AMP12;AMP12;23;k;IIIb;Ver art. 3.14.8.3
+5.2.19;Sanidad;Maternidad;rubro;NO;AMP12;AMP12;AMP12;23;k;IIIb;Ver art. 3.14.8.3
+5.2.20;Sanidad;Centro de reproducción medicamente asistida;rubro;NO;500C;SI;SI;20;e;IIIa;Ver art. 3.14.8.3
+5.2.21;Sanidad;Centro de rehabilitación en general (recuperación física y/o social);rubro;SI;SI;SI;SI;17;e;-;
+5.2.22;Sanidad;Instituto privado (sanidad) s/internación;rubro;200SA;SI;SI;SI;20;e;IIIb;
+5.2.23;Sanidad;Instituto privado (sanidad) c/internación;rubro;NO;AMP12;AMP12;AMP12;23;k;IIIb;Ver art. 3.14.8.3
+5.2.24;Sanidad;Taller Protegido de Producción;rubro;C;SI;SI;SI;20;e;-;
+5.2.25;Sanidad;Taller Protegido Terapéutico;rubro;C;SI;SI;SI;20;e;-;
+5.2.26;Sanidad;Centro de Día Discapacidad;rubro;SI;SI;SI;SI;20;e;-;
+5.2.27;Sanidad;Centro Educativo Terapéutico;rubro;SI;SI;SI;SI;20;e;-;
+5.2.28;Sanidad;Centro de Rehabilitación para personas con discapacidad;rubro;SI;SI;SI;SI;20;e;-;
+5.2.29;Sanidad;Residencia (con internación)- Discapacidad;rubro;SI;SI;SI;SI;-;-;-;
+5.2.30;Sanidad;Pequeño Hogar (con internación) Discapacidad;rubro;SI;SI;SI;SI;-;-;-;
+5.2.31;Sanidad;Hogar (con internación) Discapacidad;rubro;SA;SI;SI;SI;-;-;-;
+5.2.32;Sanidad;Clínica veterinaria;rubro;C;200C;SI;SI;21;-;I;
+5.2.33;Sanidad;Centro veterinario con internación limitada al proceso pre y postoperatorio;rubro;C;1500;1500;1500;-;-;-;
+5.2.34;Sanidad;Laboratorio de análisis clínicos;rubro;200;1500;SI;SI;1;e;-;
+5.2.35;Sanidad;Laboratorio de prótesis dentales;rubro;50;150;200;500;-;-;-;
+5.2.36;Sanidad;Servicios de traslados sanitarios, atención domiciliaria y emergencias;rubro;NO;200C;SI;SI;30;e;-;
+5.2.37;Sanidad;Vacunatorio;rubro;SI;SI;SI;SI;-;-;-;
+5.2.38;Sanidad;Laboratorio de estudios radiológicos y/o estudios especiales;rubro;200;1500;SI;SI;1;e;-;
+5.2.39;Sanidad;Laboratorio de análisis clínicos, y/o estudios especiales para animales;rubro;200;1500;SI;SI;-;a;-;
+5.2.40;Sanidad;Casa Club;rubro;SI;SI;SI;SI;20;e;-;
+5.3;Sanidad;Establecimientos de sanidad - Centro principal;descripción;C;C;C;C;34;d;VII;Ver art. 3.14.8.3
+5.3.1;Sanidad;Hospital;rubro;C;C;C;C;34;d;VII;Ver art. 3.9
+6.1;Servicios;Servicios para la vivienda y sus ocupantes;descripción;200;500;SI;SI;-;-;-;
+6.1.1;Servicios;Agencias comerciales de empleo, turismo, inmobiliaria y otros;rubro;200;500;SI;SI;-;-;-;
+6.1.2;Servicios;Agencia de loterías;rubro;200;500;SI;SI;-;-;-;
+6.1.3;Servicios;Agencia de taxímetros /remises/autos de alquiler;rubro;200;500;SI;SI;37;-;-;
+6.1.4;Servicios;Agencia de alquiler de motocicletas y bicicletas;rubro;200;500;SI;SI;37;e;-;
+6.1.5;Servicios;Banco, oficinas crediticias, financieras y cooperativas;rubro;SA;SI;SI;SI;-;-;I;La referencia de carga y descarga corresponde a superficies mayores a 500m2
+6.1.6;Servicios;Cobro de impuestos y servicios;rubro;200;500;SI;SI;-;-;-;
+6.1.7;Servicios;Estudio y laboratorio fotográfico;rubro;200;500;SI;SI;-;-;-;
+6.1.8;Servicios;Estudio profesional;rubro;SI;SI;SI;SI;31;e;-;
+6.1.9;Servicios;Empresa de publicidad;rubro;200;500;SI;SI;30;e;-;
+6.1.10;Servicios;Empresa de servicio de seguridad sin polígono de tiro;rubro;200;500;SI;SI;30;e;-;
+6.1.11;Servicios;Empresa de servicio de seguridad con polígono de tiro;rubro;NO;NO;SI;SI;30;e;-;
+6.1.12;Servicios;Garaje comercial;rubro;C;SI;SI;SI;-;u;-;Ver art 3.14.3
+6.1.13;Servicios;Playa de estacionamiento;rubro;C;C;SI;C;-;u;-;Ver art. 3.14.3
+6.1.14;Servicios;Playa de remisión;rubro;C;C;C;C;-;-;-;
+6.1.15;Servicios;Playa de depósito de vehículos sin compactación;rubro;NO;C;C;NO;-;-;-;
+6.1.16;Servicios;Salón de estética;rubro;200;500;SI;SI;-;-;-;
+6.1.17;Servicios;Instituto remodelación adelgazamiento y gimnasia correctiva (con supervisión profesional médico);rubro;200;SI;SI;SI;17;e;-;
+6.1.18;Servicios;Pilates;rubro;200;SI;SI;SI;-;n;-;
+6.1.19;Servicios;Local de perforación y tatuaje;rubro;NO;100SA;SI;SI;-;-;-;
+6.1.20;Servicios;Peluquería y otros servicios para animales domésticos;rubro;200;SI;SI;SI;-;-;-;
+6.1.21;Servicios;Centro de Yoga;rubro;200;SI;SI;SI;-;n;-;
+6.2;Servicios;Servicios ocasionales para empresas o industrias;descripción;200;500;SI;SI;-;-;-;
+6.2.1;Servicios;Agencia de información y noticias;rubro;NO;NO;SI;SI;-;-;-;
+6.2.2;Servicios;Alquiler de artículos, elementos, accesorios y muebles para prestación de servicios de lunch sin depósito;rubro;NO;200;SI;SI;31;e;-;
+6.2.3;Servicios;Alquiler de artículos, elementos, accesorios y muebles para prestación de servicios de lunch con depósito (excepto productos perecederos);rubro;NO;500;SI;SI;9;c;IIIb;
+6.2.4;Servicios;Banco casa central;rubro;NO;NO;SI;SI;1;g;IIIb;
+6.2.5;Servicios;Báscula pública;rubro;NO;NO;C;NO;12;g;-;
+6.2.6;Servicios;Bolsa de valores y de comercio;rubro;NO;NO;SI;SI;-;-;-;
+6.2.7;Servicios;Casa de cambioagencia de seguros;rubro;NO;SI;SI;SI;-;-;-;
+6.2.8;Servicios;Corporaciones, cámaras y asociaciones profesionales, mutuales, gremiales o de bien público;rubro;200;SI;SI;SI;1;g;-;
+6.2.9;Servicios;Editorial sin depósito ni imprenta;rubro;200;500;SI;SI;31;h;-;
+6.2.10;Servicios;Estudio de filmación y fotografía;rubro;NO;1500;SI;SI;-;c;II;
+6.2.11;Servicios;Estudio de radio;rubro;NO;SI;SI;SI;-;c;II;
+6.2.12;Servicios;Estudio de televisión;rubro;NO;NO;C;C;34;d;VII;
+6.2.13;Servicios;Estudio de grabación de sonido;rubro;C;200C;SI;SI;-;-;-;
+6.2.14;Servicios;Laboratorio de análisis industriales;rubro;NO;NO;SI;C;1;c;IIIa;UCDI - Ver art. 3.4
+6.2.15;Servicios;Laboratorio de análisis no industriales;rubro;NO;NO;SI;SI;1;c;IIIa;
+6.2.16;Servicios;Mensajería en motocicleta y bicicleta;rubro;200;500;SI;SI;38;e;-;
+6.2.17;Servicios;Oficina comercial/consultora;rubro;SI;SI;SI;SI;9;g;-;
+6.2.18;Servicios;Espacio de Trabajo Colaborativo;rubro;SI;SI;SI;SI;22;g;-;
+6.2.19;Servicios;Centro de procesamiento de datos y tabulaciones;rubro;NO;500C;SI;SI;-;-;IIIa;
+6.2.20;Servicios;Actividades de Tecnologías de la Información y las Comunicaciones (TIC);rubro;NO;SI;SI;SI;39;s;-;Admitidos en todas las Áreas de Mixtura del Polo Tecnológico.
+6.2.21;Servicios;Telefonía móvil celular, campo de antenas y equipos de transmisión;rubro;C;C;C;C;34;d;VII;
+6.2.22;Servicios;Taller productivo anexo a vivienda;rubro;C;SA;SI;SI;-;-;-;
+6.2.23;Servicios;Oficina de correos;rubro;C;SI;SI;SI;-;-;IIIa;
+6.2.24;Servicios;Sala de ensayos;rubro;C;C;1000;1000;-;-;I;
+6.3;Servicios;Servicios que pueden ocasionar molestias o ser peligrosos;descripción;C;C;C;C;34;d;VII;
+6.3.1;Servicios;Escuela para pequeños animales;rubro;C;C;100;500;9;c;-;Como actividad única en la parcela, o complementaria del rubro Consultorio Veterinario y/o Pensionado para pequeños animales, en parcelas mayores de 500m2 y máximo de 1000m2
+6.3.2;Servicios;Pensionado de pequeños animales;rubro;50;200;SI;SI;-;-;-;Se admiten en parcelas no menores de 500m2 de superficie
+6.3.3;Servicios;Estación de radio/ televisión;rubro;NO;C;C;C;34;d;VII;
+6.3.4;Servicios;Empresa de servicios fúnebres sin depósito;rubro;NO;150;SI;SI;-;-;-;Ver art. 3.4
+6.3.5;Servicios;Estación de servicio-combustibles líquidos y/o GNC;rubro;NO;NO;C;C;35a;-;-;UCDI - Ver art. 3.4, art. 3.6.1.2.7 y art. 3.6.1.1.13.
+6.3.6;Servicios;Estación de cargadores eléctricos;rubro;SI;SI;SI;SI;-;-;-;
+6.3.7;Servicios;Empresa de servicios fúnebres con depósito y/o garaje;rubro;NO;NO;SI;SI;-;-;I;Ver art. 3.4
+6.3.8;Servicios;Exposición y venta de ataúdes;rubro;NO;NO;SI;SI;-;-;I;
+6.3.9;Servicios;Velatorio;rubro;NO;200C;SI;SI;-;-;II;Ver Art. 3.14.8.3
+6.3.10;Servicios;Lavadero automático de vehículos automotores/ manual de vehículos automotores;rubro;NO;SA;SA;C;21;-;-;
+6.4;Servicios;Actividades admitidas en estación de servicio;descripción;NO;NO;C;C;35a;-;-;Sólo como complementario al rubro 6.3.5
+6.5;Servicios;Servicios públicos y/o sociales;descripción;C;C;SI;SI;1;-;IIIa;
+6.5.1;Servicios;Oficina pública con acceso de público;rubro;C;SI;SI;SI;-;c;-;
+6.5.2;Servicios;Oficina pública sin acceso de público;rubro;C;SI;SI;SI;-;c;-;
+6.5.3;Servicios;Centro integral de la mujer y/o la diversidad;rubro;SI;SI;SI;SI;-;c;-;
+6.5.4;Servicios;Cuartel de Bomberos;rubro;SI;SI;SI;SI;-;-;-;Ver art. 7.2.10.2
+6.5.5;Servicios;Policía (comisaría);rubro;SI;SI;SI;SI;17;c;-;Ver art. 7.2.10.2
+6.5.6;Servicios;Policía (departamento central);rubro;NO;C;SI;SI;34;d;VII;
+7.1;Transporte;Depósito de transporte;descripción;NO;NO;C;C;-;-;-;
+7.1.1;Transporte;Depósito de equipo ferroviario, playa de contenedores;rubro;NO;NO;C;NO;-;-;-;
+7.1.2;Transporte;Playa y/o depósito de contenedores;rubro;NO;NO;C;NO;-;-;-;
+7.2;Transporte;Garaje;descripción;NO;NO;C;C;-;-;-;
+7.2.1;Transporte;Expreso de carga liviana (taxi flet);rubro;NO;NO;SI;C;-;-;VII;
+7.2.2;Transporte;Garaje para camiones y material rodante (privado), volquete, mudanzas;rubro;NO;NO;C;NO;-;-;-;UCDI - Ver art. 3.4
+7.2.3;Transporte;Garaje para ómnibus y colectivos;rubro;NO;NO;C;C;-;-;-;UCDI - Ver art. 3.4
+7.2.4;Transporte;Garaje para camiones con servicio al transportista sin abastecimiento de combustible;rubro;NO;NO;C;NO;-;-;-;
+7.2.5;Transporte;Garaje para camiones con servicio al transportista con abastecimiento de combustible;rubro;NO;NO;C;NO;-;-;-;
+7.2.6;Transporte;Garaje y/o taller de subterráneo;rubro;C;C;C;C;-;-;-;
+7.2.7;Transporte;Transporte de caudales;rubro;NO;NO;C;NO;-;-;-;
+7.2.8;Transporte;Caballerizas, studs, guarda de vehículos tracción a sangre;rubro;NO;NO;C;NO;-;-;-;
+7.3;Transporte;Estación intermedia;descripción;NO;NO;C;C;-;-;-;Ver art. 3.6.3.1.7.
+7.3.1;Transporte;Estación intermedia de subterráneos;rubro;C;C;C;C;34;d;VII;
+7.3.2;Transporte;Estación intermedia de tren suburbano;rubro;C;C;C;C;34;d;VII;
+7.3.3;Transporte;Estación intermedia para transporte público urbano automotor;rubro;C;C;C;C;34;d;VII;
+7.4;Transporte;Estación terminal;descripción;NO;NO;C;C;-;-;-;Ver art. 3.6.3.1.7.
+7.4.1;Transporte;Estación de transporte pre y post aéreo;rubro;NO;NO;C;C;34;d;VII;
+7.4.2;Transporte;Estación Terminal de Transporte interjurisdiccional;rubro;NO;NO;C;C;34;d;VII;
+7.4.3;Transporte;Estación terminal para transporte público urbano automotor;rubro;NO;NO;C;NO;-;-;-;
+7.4.4;Transporte;Estación terminal de subterráneo;rubro;C;C;C;C;-;-;-;
+7.4.5;Transporte;Estación terminal de tren suburbano;rubro;C;C;C;C;-;-;-;
+7.4.6;Transporte;Helipuerto;rubro;NO;NO;C;C;34;d;VII;
+7.5;Transporte;Transferencia;descripción;NO;NO;C;C;-;-;-;
+7.5.1;Transporte;Plataforma de transferencia (carga) Caso particular Parque Patricios;rubro;NO;NO;C;C;-;-;-;
+7.5.2;Transporte;Terminal de carga por automotor. Caso particular Parque Patricios;rubro;NO;NO;C;NO;-;-;-;
+7.5.3;Transporte;Centro de Trasbordo;rubro;NO;NO;C;C;-;d;-;
+8.1;Depósitos, almacenamiento y logística;Establecimientos de escala local y metropolitana;descripción;NO;NO;C;C;34;d;VII;Ver art. 3.13.1
+8.1.1;Depósitos, almacenamiento y logística;Centros de concentración logística;rubro;NO;C;C;C;34;d;VII;Ver art. 3.13.1
+8.1.2;Depósitos, almacenamiento y logística;Depósito logístico;rubro;C;200C;1500C;1000C;-;t;IIIb;Ver art. 3.13.1
+8.1.3;Depósitos, almacenamiento y logística;Depósito primario;rubro;NO;NO;SCPC;SCPC;-;t;IIIb;Ver art. 3.13.1
+8.1.4;Depósitos, almacenamiento y logística;Depósitos fiscales;rubro;NO;NO;C;NO;34;d;VII;Ver art. 3.13.1
+8.2;Depósitos, almacenamiento y logística;Establecimientos de escala barrial;descripción;NO;NO;C;C;-;d;VII;Ver art. 3.13.1
+8.2.1;Depósitos, almacenamiento y logística;Local de distribución;rubro;200C;200C;1000;500;-;t;IIIa;Ver art. 3.13.1
+8.2.2;Depósitos, almacenamiento y logística;Depósito residencial y guardamuebles;rubro;200C;500C;1500C;1000C;-;t;IIIb;Ver art. 3.13.1
+9.1;Residencial;Vivienda individual;descripción;SI;SI;SI;SI;18;-;-;
+9.2;Residencial;Vivienda colectiva;descripción;SI;SI;SI;SI;19;m;-;
+9.3;Residencial;Residencia comunitaria;descripción;C;SI;SI;SI;-;n;-;
+9.3.1;Residencial;Convento;rubro;SI;SI;SI;SI;-;n;-;
+9.3.2;Residencial;Hogar de niñas, niños y adolescentes;rubro;SI;SI;SI;SI;-;n;-;
+9.3.3;Residencial;Residencia de estudiantes;rubro;1000C;SI;SI;SI;-;p;-;
+9.3.4;Residencial;Residencial para personas mayores;rubro;SI;SI;SI;SI;-;-;-;
+9.3.5;Residencial;Hogar de contención y/o refugio;rubro;SI;SI;SI;SI;-;n;-;

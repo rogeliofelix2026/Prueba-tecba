@@ -1,0 +1,222 @@
+{
+  "request_id": "00000000-0000-4000-8000-000000000001",
+  "generated_at": "2026-10-13T12:00:00+00:00",
+  "status": "resolved",
+  "query": {
+    "text_input": "Quiero abrir una cafetería en Av. Corrientes 2500.",
+    "activity_input": "Cafetería",
+    "activity_code_input": "MOCK-CAFETERIA",
+    "address_input": "Av. Corrientes 2500, CABA",
+    "address_extracted": null,
+    "address_used": "Av. Corrientes 2500, CABA"
+  },
+  "execution": {
+    "mode": "deterministic",
+    "ai_used": false
+  },
+  "activity": {
+    "id": 1,
+    "code": "MOCK-CAFETERIA",
+    "name": "Cafetería",
+    "category": "Gastronomía",
+    "mapping_status": "official",
+    "source_version_id": 11,
+    "alias_source_version_id": 11,
+    "matched_alias": "Cafetería",
+    "match_kind": "canonical",
+    "resolution_method": "catalog_code",
+    "user_confirmed": true,
+    "confirmation_required": false,
+    "confirmation_status": "confirmed_by_explicit_selection"
+  },
+  "location": {
+    "address_input": "Av. Corrientes 2500, CABA",
+    "address_normalized": "CORRIENTES AV. 2500",
+    "latitude": -34.604792,
+    "longitude": -58.401981,
+    "crs": "EPSG:4326",
+    "smp": "009-061-013",
+    "street_code": "MOCK",
+    "height": 2500,
+    "from_cache": true,
+    "usig_map_url": null,
+    "source_version_id": 12,
+    "warnings": []
+  },
+  "territory": {
+    "parcel": {
+      "id": 152596,
+      "smp": "009-061-013",
+      "partida_ma": null,
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -58.402,
+              -34.6048
+            ],
+            [
+              -58.4019,
+              -34.6048
+            ],
+            [
+              -58.4019,
+              -34.6047
+            ],
+            [
+              -58.402,
+              -34.6047
+            ],
+            [
+              -58.402,
+              -34.6048
+            ]
+          ]
+        ]
+      },
+      "source_version_id": 13,
+      "geometry_source_version_id": 14
+    },
+    "administrative": {
+      "barrio": {
+        "id": 1,
+        "name": "Barrio de prueba"
+      },
+      "comuna": {
+        "id": 1,
+        "name": "Comuna de prueba"
+      }
+    },
+    "urbanism": {
+      "status": "available",
+      "mixturas": [
+        2,
+        3
+      ],
+      "special_districts": [],
+      "indicators": {
+        "catalogado": 0
+      },
+      "source_version_id": 15
+    },
+    "land_use": [],
+    "useful_data": {},
+    "adjacent_streets": [],
+    "resolution_status": "resolved",
+    "candidate_parcels": []
+  },
+  "compatibility": {
+    "status": "compatible",
+    "activity": {
+      "id": 1,
+      "code": "MOCK-CAFETERIA",
+      "name": "Cafetería"
+    },
+    "mixturas": [
+      2,
+      3
+    ],
+    "selected_mixtura": 2,
+    "notes": [
+      "Ejemplo ficticio; no constituye dictamen normativo."
+    ],
+    "evaluations": [
+      {
+        "mixtura": 2,
+        "activity_use_rule_id": 500,
+        "raw_value": "SI",
+        "source_version_id": 16,
+        "status": "compatible",
+        "status_rank": 0,
+        "notes": []
+      }
+    ],
+    "special_districts": [],
+    "basis": {
+      "urban_parcel_rule_id": 700,
+      "source_version_id": 15
+    }
+  },
+  "procedure_type_mapping": {
+    "mapping_id": 300,
+    "activity_code": "MOCK-CAFETERIA",
+    "catalog_activity_name": "Cafetería",
+    "annex_ii_activity_name": "Cafetería (ejemplo ficticio)",
+    "procedure_type_code": "DDRR_E",
+    "procedure_type_label": "DDRR E (ejemplo ficticio)",
+    "possible_procedure_types": [],
+    "status": "confirmed",
+    "method": "mock_only",
+    "annex_ii_page": 1,
+    "observations": "MOCK_DATA_NOT_REAL",
+    "source_annex_id": "IF-2025-11263620-GCABA-DGHP",
+    "source_version_id": 17,
+    "source_version": "MOCK-VERSION",
+    "source_status": "active",
+    "published_at": "2025-03-14",
+    "effective_from": "2025-03-14",
+    "warnings": []
+  },
+  "procedures": {
+    "status": "available",
+    "classification_is_not_a_procedure_record": true,
+    "items": [
+      {
+        "id": 900,
+        "name": "Procedimiento ficticio para el mock",
+        "source_version_id": 17
+      }
+    ]
+  },
+  "sources": [
+    {
+      "source_version_id": 11,
+      "code": "cuadro_usos",
+      "name": "Cuadro de Usos",
+      "publisher": "MOCK",
+      "version": "MOCK-VERSION",
+      "status": "active",
+      "url": null,
+      "checksum_sha256": null,
+      "published_at": null,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "source_version_id": 12,
+      "code": "usig",
+      "name": "USIG",
+      "publisher": "MOCK",
+      "version": "rest",
+      "status": "active",
+      "url": "https://usig.buenosaires.gob.ar/apis/",
+      "checksum_sha256": null,
+      "published_at": null,
+      "effective_from": null,
+      "effective_to": null
+    },
+    {
+      "source_version_id": 15,
+      "code": "codigo_urbanistico",
+      "name": "Código Urbanístico",
+      "publisher": "MOCK",
+      "version": "MOCK-VERSION",
+      "status": "active",
+      "url": null,
+      "checksum_sha256": null,
+      "published_at": null,
+      "effective_from": null,
+      "effective_to": null
+    }
+  ],
+  "warnings": [
+    "MOCK_DATA_NOT_REAL"
+  ],
+  "metadata": {
+    "deterministic": true,
+    "ai_used": false,
+    "source_count": 3,
+    "parcel_geometry_included": true
+  }
+}

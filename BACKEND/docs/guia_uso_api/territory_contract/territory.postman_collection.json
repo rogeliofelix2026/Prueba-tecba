@@ -1,0 +1,192 @@
+{
+  "info": {
+    "name": "SGI — Territory v0.3.0",
+    "description": "Casos de contrato para el flujo territorial determinista. Usar datos propios en las variables; los IDs por defecto son marcadores de posición.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "activityCode",
+      "value": "REEMPLAZAR_POR_CODIGO_ACTIVIDAD"
+    },
+    {
+      "key": "activityId",
+      "value": "1"
+    },
+    {
+      "key": "smp",
+      "value": "009-061-013"
+    }
+  ],
+  "item": [
+    {
+      "name": "T01 — Consulta inicial determinista",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"Quiero consultar la actividad seleccionada en Av. Corrientes 2500, CABA\",\n  \"activity_code\": \"{{activityCode}}\",\n  \"address\": \"Av. Corrientes 2500, CABA\",\n  \"include_geometry\": true,\n  \"surface_m2\": 80\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/territory"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+              "if (pm.response.code === 200) {",
+              "  const body = pm.response.json();",
+              "  pm.test('contrato base', function () { pm.expect(body).to.have.property('request_id'); pm.expect(body).to.have.property('status'); pm.expect(body).to.have.property('query'); pm.expect(body).to.have.property('execution'); pm.expect(body).to.have.property('territory'); pm.expect(body).to.have.property('warnings'); pm.expect(body).to.have.property('metadata'); });",
+              "  pm.test('no usa IA', function () { pm.expect(body.execution.ai_used).to.eql(false); pm.expect(body.metadata.ai_used).to.eql(false); });",
+              "  pm.test('estado definido', function () { pm.expect(['needs_activity','needs_activity_confirmation','needs_address','partial','resolved']).to.include(body.status); });",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "T02 — Actividad implícita requiere confirmación",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"Quiero abrir una cafetería en Av. Corrientes 2500, CABA\",\n  \"include_geometry\": false\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/territory"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', function () { pm.response.to.have.status(200); });",
+              "if (pm.response.code === 200) { const body = pm.response.json(); pm.test('respuesta no dispara IA', function () { pm.expect(body.execution.ai_used).to.eql(false); }); pm.test('contrato de actividad presente', function () { pm.expect(body).to.have.property('activity'); pm.expect(body).to.have.property('next_action'); }); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "T06 — Request vacío inválido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"address\": \"\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/territory"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('422 para entrada sin consulta/dirección utilizable', function () { pm.response.to.have.status(422); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "T10 — Mapa GeoJSON por SMP",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/map/parcel/{{smp}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 si existe la parcela, 404 si no existe', function () { pm.expect([200,404]).to.include(pm.response.code); });",
+              "if (pm.response.code === 200) { const body = pm.response.json(); pm.test('GeoJSON Feature con geometry disponible o null explícito', function () { pm.expect(body.type).to.eql('Feature'); pm.expect(body).to.have.property('geometry'); }); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "T11 — Contexto territorial por SMP",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/context/parcel/{{smp}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 si existe la parcela, 404 si no existe', function () { pm.expect([200,404]).to.include(pm.response.code); });",
+              "if (pm.response.code === 200) { const body = pm.response.json(); pm.test('incluye territorio y contexto', function () { pm.expect(body).to.have.property('administrative'); pm.expect(body).to.have.property('urbanism'); pm.expect(body).to.have.property('land_use'); }); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "T12 — Tipo de trámite por actividad",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/activities/{{activityId}}/procedures"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 y estado explícito de clasificación/procedimientos', function () { pm.response.to.have.status(200); const body = pm.response.json(); pm.expect(body).to.have.property('procedure_type_mapping'); pm.expect(body).to.have.property('procedure_details_status'); pm.expect(body).to.have.property('warnings'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "T13 — Readiness del esquema",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/ready"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('readiness es 200 o 503 según BD', function () { pm.expect([200,503]).to.include(pm.response.code); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

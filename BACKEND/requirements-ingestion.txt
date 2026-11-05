@@ -1,0 +1,7 @@
+# Dependencias pesadas usadas solo por procesos offline de carga/transformación.
+pandas>=2.2,<4.0
+pyogrio>=0.10,<1.0
+pyarrow>=17,<24
+geopandas>=1.0,<2.0
+shapely>=2.0,<3.0
+PyMuPDF>=1.25,<2.0

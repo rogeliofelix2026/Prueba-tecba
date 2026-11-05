@@ -1,0 +1,108 @@
+{
+  "request_id": "00000000-0000-4000-8000-000000000002",
+  "generated_at": "2026-10-13T12:00:00+00:00",
+  "status": "partial",
+  "query": {
+    "text_input": "Quiero abrir una cafetería en Dirección de prueba 100.",
+    "activity_input": "Cafetería",
+    "activity_code_input": "MOCK-CAFETERIA",
+    "address_input": "Dirección de prueba 100, CABA",
+    "address_extracted": null,
+    "address_used": "Dirección de prueba 100, CABA"
+  },
+  "execution": {
+    "mode": "deterministic",
+    "ai_used": false
+  },
+  "activity": {
+    "id": 1,
+    "code": "MOCK-CAFETERIA",
+    "name": "Cafetería",
+    "category": "Gastronomía",
+    "mapping_status": "official",
+    "source_version_id": 11,
+    "alias_source_version_id": null,
+    "matched_alias": "Cafetería",
+    "match_kind": "canonical",
+    "resolution_method": "catalog_code",
+    "user_confirmed": true,
+    "confirmation_required": false,
+    "confirmation_status": "confirmed_by_explicit_selection"
+  },
+  "location": {
+    "address_input": "Dirección de prueba 100, CABA",
+    "address_normalized": "DIRECCION DE PRUEBA 100",
+    "latitude": -34.6,
+    "longitude": -58.4,
+    "crs": "EPSG:4326",
+    "smp": null,
+    "street_code": null,
+    "height": 100,
+    "from_cache": false,
+    "usig_map_url": null,
+    "source_version_id": 12,
+    "warnings": []
+  },
+  "territory": {
+    "parcel": null,
+    "administrative": {
+      "barrio": null,
+      "comuna": null
+    },
+    "urbanism": {
+      "status": "unavailable",
+      "mixturas": [],
+      "special_districts": [],
+      "indicators": {},
+      "source_version_id": null
+    },
+    "land_use": [],
+    "useful_data": {},
+    "adjacent_streets": [],
+    "resolution_status": "not_found",
+    "candidate_parcels": []
+  },
+  "compatibility": null,
+  "procedure_type_mapping": {
+    "status": "not_found_in_anexo_ii",
+    "procedure_type_code": null,
+    "procedure_type_label": null,
+    "possible_procedure_types": [],
+    "source_version_id": null,
+    "warnings": [
+      "ACTIVITY_MAPPING_NOT_FOUND"
+    ]
+  },
+  "procedures": {
+    "status": "not_loaded",
+    "classification_is_not_a_procedure_record": true,
+    "items": []
+  },
+  "sources": [
+    {
+      "source_version_id": 11,
+      "code": "cuadro_usos",
+      "name": "Cuadro de Usos",
+      "publisher": "MOCK",
+      "version": "MOCK-VERSION",
+      "status": "active",
+      "url": null,
+      "checksum_sha256": null,
+      "published_at": null,
+      "effective_from": null,
+      "effective_to": null
+    }
+  ],
+  "warnings": [
+    "PARCEL_NOT_RESOLVED",
+    "ACTIVITY_MAPPING_NOT_FOUND",
+    "PROCEDURE_DETAILS_NOT_LOADED",
+    "MOCK_DATA_NOT_REAL"
+  ],
+  "metadata": {
+    "deterministic": true,
+    "ai_used": false,
+    "source_count": 1,
+    "parcel_geometry_included": false
+  }
+}

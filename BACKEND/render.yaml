@@ -1,0 +1,47 @@
+# SGI staging: Render Free. No persistent local files; keep state in Supabase.
+services:
+  - type: web
+    name: sgi-backend
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/v1/ready
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_VERSION
+        value: 0.3.5
+      - key: LOG_LEVEL
+        value: INFO
+      - key: DOCS_ENABLED
+        value: "false"
+      - key: RAG_ENABLED
+        value: "false"
+      # Render no aloja Ollama en localhost; mantener desactivado salvo configurar
+      # una instancia privada autorizada en OLLAMA_BASE_URL.
+      - key: AI_INPUT_INTERPRETER_ENABLED
+        value: "false"
+      - key: AI_INPUT_INTERPRETER_TIMEOUT_SECONDS
+        value: "12"
+      - key: AI_EXPLANATION_ENABLED
+        value: "false"
+      - key: DATABASE_URL
+        sync: false
+      - key: DB_MIN_SIZE
+        value: "1"
+      - key: DB_MAX_SIZE
+        value: "5"
+      - key: DB_TIMEOUT_SECONDS
+        value: "5"
+      - key: USIG_TIMEOUT_SECONDS
+        value: "10"
+      - key: USIG_MAX_RETRIES
+        value: "2"
+      # Allow Render's service hostname during bootstrap; tighten to the exact
+      # hostname in the Dashboard after the first domain is created.
+      - key: ALLOWED_HOSTS
+        value: "*.onrender.com"
+      # Development origins permit testing before the frontend has a hosted URL.
+      # Replace/add only the real deployed frontend origin before team integration.
+      - key: CORS_ORIGINS
+        value: "http://localhost:5173,http://localhost:3000"
