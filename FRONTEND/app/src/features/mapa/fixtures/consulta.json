@@ -1,0 +1,23 @@
+{
+  "query_id": "prueba-1",
+  "answer": "Trámites de prueba para esta dirección.",
+  "context": {
+    "activity": {
+      "name": "Cafetería",
+      "address": "Av. Corrientes 2500, CABA"
+    },
+    "location": {
+      "latitude": -34.604853,
+      "longitude": -58.402030,
+      "smp": null
+    },
+    "territory": {
+      "actividadCompatible": true,
+      "plancheta": "12",
+      "mixturaUso": "Área de Alta Mixtura de Usos del Suelo 4: corresponde a las áreas destinadas a la residencia, conectividad densa, servicios y comercios de escala mediana y grande.",
+      "rubroCodigo": "1.5"
+    },
+    "procedures": []
+  },
+  "evidence": []
+}
