@@ -21,7 +21,7 @@ La base fue iniciada con:
 
 * Next.js
 * React
-* JavaScript
+* TypeScript
 * Tailwind CSS
 
 Esta base corresponde al punto de partida técnico del proyecto y no representa todavía la plataforma terminada.

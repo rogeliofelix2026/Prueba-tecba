@@ -6,35 +6,43 @@ import { PopUpConfirmarConsulta } from "../components/PopUpConfirm"
 import AuroraBackground from "../components/AuroraBackground"
 
 export function Banner() {
-    const { pendiente, editar, confirmarConsulta } = useConsulta()
+  const { pendiente, cargando, editar, confirmarConsulta } = useConsulta()
 
-    return (
-        <AuroraBackground className="min-h-screen">
-            <section className="flex min-h-screen flex-col items-center justify-evenly px-6 text-center text-white">
+  return (
+    <AuroraBackground className="min-h-screen">
+      <section className="flex min-h-screen flex-col items-center justify-evenly px-4 sm:px-6 py-12 md:py-16 text-center text-white">
 
-                <span className="inline-flex w-fit items-center rounded-full bg-white/10 px-3 py-1 text-[11px] font-medium tracking-wider text-white/70 backdrop-blur-sm">CONSULTAS SOBRE ACTIVIDADES ECONÓMICAS · CABA</span>
+        <span className="inline-flex w-fit max-w-[90%] items-center rounded-full bg-white/10 px-3 py-1 text-[10px] sm:text-[11px] font-medium tracking-wider text-white/70 backdrop-blur-sm text-center mb-6 md:mb-8">
+          CONSULTAS SOBRE ACTIVIDADES ECONÓMICAS · CABA
+        </span>
 
-                <h1 className="text-8xl text-textColor md:text-6xl lg:text-7xl font-medium p-3 text-center">Todo empieza con<br />
-                    lo que querés hacer.</h1>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium text-textColor leading-tight px-2 mb-4 md:mb-6">
+          Todo empieza con<br className="hidden sm:block" />
+          <span className="sm:hidden"> </span>lo que querés hacer.
+        </h1>
 
-                <span className="w-fitfont-medium tracking-wider backdrop-blur-sm p-3 text-[16px] text-textColor text-center">Contanos tu actividad y dónde pensás realizarla. Te orientaremos con información <br /> territorial y sobre trámites, respaldada por fuentes oficiales.</span>
+        <p className="w-full max-w-2xl font-medium tracking-wide text-textColor text-sm sm:text-base md:text-[16px] leading-relaxed px-2 mb-8 md:mb-10">
+          Contanos tu actividad y dónde pensás realizarla. Te orientaremos con información territorial y sobre trámites, respaldada por fuentes oficiales.
+        </p>
 
-                <FormularioConsulta2></FormularioConsulta2>
+        <div className="w-full max-w-lg md:max-w-xl lg:max-w-2xl px-2 mb-8 md:mb-12">
+          <FormularioConsulta2 />
+        </div>
 
-                <span className="text-textColor text-[12px] uppercase">DESLIZÁ PARA CONOCER EL PROCESO  ↓</span>
+        <span className="text-textColor text-[10px] sm:text-[12px] uppercase tracking-wider mt-2">
+          DESLIZÁ PARA CONOCER EL PROCESO ↓
+        </span>
 
-                {pendiente && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900/40 p-4">
-                        <PopUpConfirmarConsulta
-                            actividad={pendiente.activity ?? ""}
-                            ubicacion={pendiente.address ?? ""}
-                            onEditar={editar}
-                            onConfirmar={confirmarConsulta}
-                        />
-                    </div>
-                )}
-
-            </section>
-        </AuroraBackground>
-    )
+        {pendiente && (
+          <PopUpConfirmarConsulta
+            actividad={pendiente.activity ?? ""}
+            ubicacion={pendiente.address ?? ""}
+            cargando={cargando}
+            onEditar={editar}
+            onConfirmar={confirmarConsulta}
+          />
+        )}
+      </section>
+    </AuroraBackground>
+  )
 }

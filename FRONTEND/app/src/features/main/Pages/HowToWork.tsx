@@ -46,25 +46,26 @@ export function HowToWork() {
   const rango2Fin = items2.requeriments.length + items3.requeriments.length
 
   return (
-    <section className="flex flex-col w-full min-h-screen items-center pt-10">
-      <div className="mb-12 text-center flex flex-col items-center gap-5">
+    <section className="flex flex-col w-full min-h-[screen] items-center pt-6 md:pt-10">
+      <div className="mb-8 md:mb-12 text-center flex flex-col items-center gap-4 md:gap-5 px-4">
         <p className="text-xs font-medium uppercase tracking-widest text-[#035C80]">
           ANTES DE INICIAR · HABILITACIÓN EXPRÉS
         </p>
-        <h2 className="text-4xl font-bold text-[#035C80] md:text-5xl">
+        <h2 className="text-3xl font-bold text-[#035C80] md:text-4xl lg:text-5xl px-2">
           Un camino más claro para empezar
         </h2>
-        <p className="mx-auto max-w-2xl text-[#527084] text-[17px]">
+        <p className="mx-auto max-w-2xl text-[#527084] text-base md:text-[17px] px-2">
           Explorá los requisitos y el proceso de habilitación, paso a paso y sin complicaciones.
         </p>
         <div
-          className="h-[4px] w-32 rounded-full"
+          className="h-[4px] w-24 md:w-32 rounded-full"
           style={{ background: "linear-gradient(90deg, #705AE0 0%, #12B9A6 100%)" }}
         />
       </div>
 
-      <section className="flex gap-8 w-full justify-center min-w-0 px-6">
-        <div className="w-[43%] min-w-0 flex flex-col gap-4">
+      <section className="flex flex-col lg:flex-row gap-6 lg:gap-8 w-full justify-center min-w-0 px-4 md:px-6">
+        {/* Columna izquierda: pasos */}
+        <div className="w-full lg:w-[48%] xl:w-[43%] min-w-0 flex flex-col gap-4">
           <StepCard
             number="01"
             label="CONDICIONES DE LA VÍA EXPRÉS"
@@ -77,7 +78,7 @@ export function HowToWork() {
             moreButtonOpen={`Mostrar los ${items.requeriments.length} requisitos`}
             moreButtonClose="Ocultar los requisitos"
             footerNote="Cumplir el límite de superficie, por sí solo, no alcanza: deben cumplirse todas las condiciones."
-            footerLink="https://example.com"
+            footerLink="https://buenosaires.gob.ar/tramites/habilitacion-de-actividad-economica-expres"
           />
 
           <StepCard
@@ -91,6 +92,8 @@ export function HowToWork() {
             items={items2}
             moreButtonOpen={`Mostrar los pasos 1-${items2.requeriments.length}`}
             moreButtonClose={`Ocultar los pasos 1-${items2.requeriments.length}`}
+            footerNote="Cumplir el límite de superficie, por sí solo, no alcanza: deben cumplirse todas las condiciones."
+            footerLink="https://buenosaires.gob.ar/tramites/habilitacion-de-actividad-economica-expres"
           />
 
           <StepCard
@@ -104,16 +107,27 @@ export function HowToWork() {
             items={items3}
             moreButtonOpen={`Mostrar los pasos ${rango2Inicio}-${rango2Fin}`}
             moreButtonClose={`Ocultar los pasos ${rango2Inicio}-${rango2Fin}`}
+            footerNote="Cumplir el límite de superficie, por sí solo, no alcanza: deben cumplirse todas las condiciones."
+            footerLink="https://buenosaires.gob.ar/tramites/habilitacion-de-actividad-economica-expres"
           />
         </div>
 
-        <div className="w-[43%] min-w-0 flex flex-col gap-5">
+        {/* Columna derecha: mapa */}
+        <div className="w-full lg:w-[48%] xl:w-[43%] min-w-0 flex flex-col gap-4 md:gap-5 mt-2 lg:mt-0">
           <div className="flex flex-col gap-2">
-            <p className="text-[#035C80] text-[12px] font-bold">INDIQUE LA UBICACIÖN DESEADA</p>
-            <h2 className="text-[#143146] text-[27px] font-semibold">Elegí dónde querés realizar la actividad.</h2>
-            <p className="text-[#527084] text-[15px] ">Podés señalar el lugar en el mapa o escribir la dirección en el chat de arriba.</p>
+            <p className="text-[#035C80] text-[12px] font-bold tracking-wide">
+              INDICÁ LA UBICACIÓN DESEADA
+            </p>
+            <h2 className="text-[#143146] text-xl md:text-2xl lg:text-[27px] font-semibold">
+              Elegí dónde querés realizar la actividad.
+            </h2>
+            <p className="text-[#527084] text-sm md:text-[15px]">
+              Podés señalar el lugar en el mapa o escribir la dirección en el chat de arriba.
+            </p>
           </div>
-          <Mapa height="34rem" />
+          <div className="w-full h-[22rem] sm:h-[26rem] md:h-[30rem] lg:h-[34rem]">
+            <Mapa height="100%" className="h-full" />
+          </div>
         </div>
       </section>
     </section>

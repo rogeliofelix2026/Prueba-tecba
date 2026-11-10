@@ -6,9 +6,10 @@ import { useConsulta } from "../use-consulta"
 
 type MapaProps = {
   height?: string
+  className?: string
 }
 
-export function Mapa({ height }: MapaProps) {
+export function Mapa({ height = "34rem", className }: MapaProps) {
   const { radius, setRadius, punto } = useConsulta()
   const [visualRadius, setVisualRadius] = useState(radius)
 
@@ -17,14 +18,14 @@ export function Mapa({ height }: MapaProps) {
   }, [radius])
 
   return (
-    <section className="flex flex-col min-w-0 flex-1 gap-4">
-      <div className="w-full overflow-hidden rounded border border-zinc-200 dark:border-zinc-800">
+    <section className={`flex flex-col min-w-0 flex-1 gap-4 h-full ${className ?? ""}`}>
+      <div className="w-full h-full overflow-hidden rounded border border-zinc-200">
         <MapLoader
           lat={punto.lat}
           lng={punto.lng}
           height={height}
           withPlaces
-          radius={visualRadius}          
+          radius={visualRadius}
           onRadiusChange={setVisualRadius}
           onRadiusCommit={setRadius}
         />

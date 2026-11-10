@@ -22,7 +22,7 @@ export function FormularioConsulta() {
                     <textarea
                         className={`w-[78%] h-30 rounded border px-3 py-2 text-zinc-900 transition-colors focus:outline-none focus:ring-2 ${error
                             ? "border-red-500 focus:ring-red-200"
-                            : "border-zinc-300 focus:border-link focus:ring-link/30 dark:border-zinc-700"
+                            : "border-zinc-300 focus:border-link focus:ring-link/30"
                             }`}
                         value={texto}
                         rows={3}
@@ -67,7 +67,7 @@ export function FormularioConsulta() {
                 </div>
 
                 {error && (
-                    <div className="rounded bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/50 p-2.5 text-sm text-red-700 dark:text-red-300 flex items-center gap-2">
+                    <div className="rounded bg-red-50 border border-red-200 p-2.5 text-sm text-red-700 flex items-center gap-2">
                         <svg className="h-4 w-4 shrink-0 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>

@@ -3,7 +3,7 @@
 import { useId, useState } from "react"
 
 type ConsultaCardProps = {
-  data: any // temporalmente any hasta que unifiques el tipo
+  data: any
 }
 
 export function ConsultaCard({ data }: ConsultaCardProps) {
@@ -41,34 +41,34 @@ export function ConsultaCard({ data }: ConsultaCardProps) {
   const detailsId = useId()
 
   return (
-    <article className="w-full rounded-lg border border-slate-200 bg-white p-4 font-sans shadow-sm">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <span className="w-fit shrink-0 rounded-lg border border-sky-700 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-sky-800">
+    <article className="w-full rounded-lg border border-slate-200 bg-white p-3 sm:p-4 font-sans shadow-sm">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+        <span className="w-fit shrink-0 rounded-lg border border-sky-700 px-3 py-1.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wide text-sky-800">
           Ubicación
         </span>
 
         <div className="min-w-0 flex-1">
-          <h2 className="text-sm font-semibold text-slate-900">
+          <h2 className="text-sm sm:text-base font-semibold text-slate-900 leading-snug">
             {actividadCompatible
               ? "La actividad es compatible con esta ubicación"
               : "La actividad no es compatible con esta ubicación"}
           </h2>
-          <p className="mt-1 text-xs leading-relaxed text-slate-700">
+          <p className="mt-1 text-xs leading-relaxed text-slate-700 break-words">
             Plancheta {plancheta} · {mixturaResumen} · Rubro {rubroCodigo}
           </p>
         </div>
 
-        <div className="relative ml-auto shrink-0 self-start sm:self-center">
+        <div className="relative shrink-0 self-start sm:self-center sm:ml-auto">
           <button
             type="button"
-            className="inline-flex items-center gap-2 whitespace-nowrap text-left text-sm font-semibold text-sky-800 hover:text-sky-950"
+            className="inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap text-left text-xs sm:text-sm font-semibold text-sky-800 hover:text-sky-950"
             aria-expanded={detailsOpen}
             aria-controls={detailsId}
             onClick={() => setDetailsOpen((open) => !open)}
           >
             Ver detalle territorial
             <svg
-              className={`h-4 w-4 transition-transform ${detailsOpen ? "rotate-180" : ""}`}
+              className={`h-3.5 w-3.5 sm:h-4 sm:w-4 transition-transform ${detailsOpen ? "rotate-180" : ""}`}
               fill="none"
               stroke="currentColor"
               strokeWidth="1.8"
@@ -82,7 +82,7 @@ export function ConsultaCard({ data }: ConsultaCardProps) {
           {detailsOpen && (
             <div
               id={detailsId}
-              className="absolute -right-6 top-full z-20 mt-2 w-[200%] max-w-[calc(100vw-2rem)] translate-x-1/2 rounded-lg border border-slate-200 bg-white p-3 text-sm shadow-lg"
+              className="absolute left-0 right-0 sm:left-auto sm:right-0 top-full z-20 mt-2 w-full sm:w-80 max-w-[calc(100vw-2rem)] rounded-lg border border-slate-200 bg-white p-3 text-sm shadow-lg"
             >
               <div className="space-y-3">
                 <div>

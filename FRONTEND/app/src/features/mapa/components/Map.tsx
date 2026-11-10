@@ -22,10 +22,6 @@ export function AddressMap({ lat, lng, height, onMapLoad }: MapProps) {
       zoom: 15,
     })
 
-    map.on("load", () => {
-      map.setGlyphs("https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf")
-    })
-
     map.addControl(new NavigationControl(), "top-right")
     map.addControl(new FullscreenControl(), "top-right")
     map.addControl(new ScaleControl({ unit: "metric" }), "bottom-left")

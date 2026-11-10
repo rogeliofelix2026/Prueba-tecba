@@ -43,6 +43,7 @@ export function MapLoader({
     withPlaces && mapReady
   )
 
+
   if (!Mapa) return <div style={{ width: "100%", height }} />
 
   return (
