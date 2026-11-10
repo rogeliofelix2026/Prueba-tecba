@@ -1,13 +1,9 @@
 "use client"
 
 import { FormularioConsulta2 } from "../components/ForumularioV2"
-import { useConsulta } from "../../consulta/use-consulta"
-import { PopUpConfirmarConsulta } from "../components/PopUpConfirm"
 import AuroraBackground from "../components/AuroraBackground"
 
 export function Banner() {
-  const { pendiente, cargando, editar, confirmarConsulta } = useConsulta()
-
   return (
     <AuroraBackground className="min-h-screen">
       <section className="flex min-h-screen flex-col items-center justify-evenly px-4 sm:px-6 py-12 md:py-16 text-center text-white">
@@ -32,16 +28,6 @@ export function Banner() {
         <span className="text-textColor text-[10px] sm:text-[12px] uppercase tracking-wider mt-2">
           DESLIZÁ PARA CONOCER EL PROCESO ↓
         </span>
-
-        {pendiente && (
-          <PopUpConfirmarConsulta
-            actividad={pendiente.activity ?? ""}
-            ubicacion={pendiente.address ?? ""}
-            cargando={cargando}
-            onEditar={editar}
-            onConfirmar={confirmarConsulta}
-          />
-        )}
       </section>
     </AuroraBackground>
   )

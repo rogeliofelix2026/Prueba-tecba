@@ -78,6 +78,8 @@ export function MainStarted() {
           radius={visualRadius}
           onRadiusChange={setVisualRadius}
           onRadiusCommit={setRadius}
+          analysisLayers={capas}
+          territoryData={consultaConfirmada}
         />
 
         {/* Tarjeta flotante izquierda: Tu consulta */}
@@ -123,12 +125,12 @@ export function MainStarted() {
         </div>
 
         {/* Tarjeta flotante derecha: Capas del análisis */}
-        <div className="pointer-events-auto absolute bottom-6 right-6 z-10 hidden w-48 rounded-xl border border-slate-200/90 bg-white/95 p-3.5 shadow-md backdrop-blur-xs md:block">
+        <div className="pointer-events-auto absolute bottom-6 right-6 z-10 w-52 rounded-xl border border-slate-200/90 bg-white/95 p-3.5 shadow-md backdrop-blur-xs">
           <p className="text-[11px] font-bold text-slate-800">
             Capas del análisis
           </p>
           <div className="mt-2.5 flex flex-col gap-2 text-xs text-slate-700">
-            <label className="flex cursor-pointer items-center gap-2">
+            <label className="flex cursor-pointer select-none items-center gap-2">
               <input
                 type="checkbox"
                 checked={capas.parcela}
@@ -137,9 +139,10 @@ export function MainStarted() {
                 }
                 className="h-3.5 w-3.5 rounded accent-[#1D3343]"
               />
+              <span className="h-2.5 w-2.5 shrink-0 rounded-xs border border-[#0f766e] bg-[#0d9488]/70" />
               <span>Parcela</span>
             </label>
-            <label className="flex cursor-pointer items-center gap-2">
+            <label className="flex cursor-pointer select-none items-center gap-2">
               <input
                 type="checkbox"
                 checked={capas.codigoUrbanistico}
@@ -151,9 +154,10 @@ export function MainStarted() {
                 }
                 className="h-3.5 w-3.5 rounded accent-[#1D3343]"
               />
+              <span className="h-2.5 w-2.5 shrink-0 rounded-xs border border-[#4338ca] bg-[#6366f1]/70" />
               <span>Código Urbanístico</span>
             </label>
-            <label className="flex cursor-pointer items-center gap-2">
+            <label className="flex cursor-pointer select-none items-center gap-2">
               <input
                 type="checkbox"
                 checked={capas.usosSuelo}
@@ -162,6 +166,7 @@ export function MainStarted() {
                 }
                 className="h-3.5 w-3.5 rounded accent-[#1D3343]"
               />
+              <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#1a1a1a]" />
               <span>Usos del suelo</span>
             </label>
           </div>

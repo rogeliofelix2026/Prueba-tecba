@@ -14,7 +14,7 @@ export function PopUpConfirmarConsulta({
     onConfirmar,
 }: ConfirmarConsultaProps) {
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900/40 p-4 text-left">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-zinc-900/40 p-4 text-left backdrop-blur-[2px]">
             <section className="w-full max-w-md rounded-lg border border-zinc-200 bg-white p-5 text-zinc-900 shadow-sm">
                 <h2 className="text-lg font-semibold">Confirmá tu consulta</h2>
 

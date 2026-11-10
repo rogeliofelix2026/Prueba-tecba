@@ -7,10 +7,15 @@ import type { MapProps } from "../types.js"
 
 setWorkerUrl("/maplibre/maplibre-gl-worker.mjs")
 
-export function AddressMap({ lat, lng, height, onMapLoad }: MapProps) {
+export function AddressMap({ lat, lng, height, onMapLoad, onLocationClick, offsetCenterRight }: MapProps) {
   const container = useRef<HTMLDivElement>(null)
   const mapRef = useRef<Map | null>(null)
   const markerRef = useRef<Marker | null>(null)
+  const onLocationClickRef = useRef(onLocationClick)
+
+  useEffect(() => {
+    onLocationClickRef.current = onLocationClick
+  }, [onLocationClick])
 
   // Crear el mapa solo una vez
   useEffect(() => {
@@ -21,6 +26,16 @@ export function AddressMap({ lat, lng, height, onMapLoad }: MapProps) {
       center: [lng, lat],
       zoom: 15,
     })
+
+    if (offsetCenterRight) {
+      const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768
+      map.setPadding(
+        isDesktop
+          ? { left: 240, top: 0, right: 40, bottom: 0 }
+          : { left: 0, top: 180, right: 0, bottom: 0 }
+      )
+      map.jumpTo({ center: [lng, lat] })
+    }
 
     map.addControl(new NavigationControl(), "top-right")
     map.addControl(new FullscreenControl(), "top-right")
@@ -35,6 +50,8 @@ export function AddressMap({ lat, lng, height, onMapLoad }: MapProps) {
       } else {
         markerRef.current = new Marker().setLngLat([clickLng, clickLat]).addTo(map)
       }
+
+      onLocationClickRef.current?.(clickLat, clickLng)
     })
 
     // Marcador inicial
@@ -52,9 +69,17 @@ export function AddressMap({ lat, lng, height, onMapLoad }: MapProps) {
   // Actualizar centro y marcador cuando cambian lat/lng
   useEffect(() => {
     if (!mapRef.current) return
+    if (offsetCenterRight) {
+      const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768
+      mapRef.current.setPadding(
+        isDesktop
+          ? { left: 240, top: 0, right: 40, bottom: 0 }
+          : { left: 0, top: 180, right: 0, bottom: 0 }
+      )
+    }
     mapRef.current.flyTo({ center: [lng, lat], zoom: 15 })
     markerRef.current?.setLngLat([lng, lat])
-  }, [lat, lng])
+  }, [lat, lng, offsetCenterRight])
 
   return <div ref={container} style={{ width: "100%", height }} />
 }

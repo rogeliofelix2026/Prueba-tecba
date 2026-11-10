@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { MapLoader } from "../../mapa/components/MapLoader"
 import { useConsulta } from "../use-consulta"
+import { PopUpUbicacionMapa } from "../../main/components/PopUpUbicacionMapa"
 
 type MapaProps = {
   height?: string
@@ -10,7 +11,16 @@ type MapaProps = {
 }
 
 export function Mapa({ height = "34rem", className }: MapaProps) {
-  const { radius, setRadius, punto } = useConsulta()
+  const {
+    radius,
+    setRadius,
+    punto,
+    cargando,
+    ubicacionMapaModal,
+    seleccionarUbicacionEnMapa,
+    cerrarUbicacionMapaModal,
+    confirmarActividadEnMapa,
+  } = useConsulta()
   const [visualRadius, setVisualRadius] = useState(radius)
 
   useEffect(() => {
@@ -28,8 +38,19 @@ export function Mapa({ height = "34rem", className }: MapaProps) {
           radius={visualRadius}
           onRadiusChange={setVisualRadius}
           onRadiusCommit={setRadius}
+          onLocationClick={seleccionarUbicacionEnMapa}
         />
       </div>
+
+      {ubicacionMapaModal && (
+        <PopUpUbicacionMapa
+          direccionDetectada={ubicacionMapaModal.direccion}
+          cargandoDireccion={ubicacionMapaModal.cargandoDireccion}
+          procesando={cargando}
+          onCerrar={cerrarUbicacionMapaModal}
+          onConfirmarActividad={confirmarActividadEnMapa}
+        />
+      )}
     </section>
   )
 }

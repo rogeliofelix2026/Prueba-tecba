@@ -1,17 +1,27 @@
 import { Map } from "maplibre-gl"
 
+export type AnalysisLayers = {
+  parcela: boolean
+  codigoUrbanistico: boolean
+  usosSuelo: boolean
+}
+
 export type MapProps = {
   lat: number
   lng: number
   height: string
   onMapLoad?: (map: Map) => void
+  onLocationClick?: (lat: number, lng: number) => void
   withPlaces?: boolean
   radius?: number
+  offsetCenterRight?: boolean
 }
 
 export type MapLoaderProps = MapProps & {
   onRadiusChange?: (radius: number) => void
   onRadiusCommit?: (radius: number) => void
+  analysisLayers?: AnalysisLayers
+  territoryData?: any
 }
 
 export type Coordenadas = {
