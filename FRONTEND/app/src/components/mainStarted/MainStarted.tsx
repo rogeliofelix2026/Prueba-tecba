@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useConsulta } from "../../features/consulta/use-consulta"
 import { MapLoader } from "../../features/mapa/components/MapLoader"
+import type { AnalysisLayers } from "../../features/mapa/types"
 import ResumeCase from "../resumeCase/ResumeCase"
 import UbicResume from "../resumeCase/UbicResume"
 import BeforeStart from "../beforeStart/beforeStart"
@@ -13,13 +14,19 @@ import {
   DudaStepCard,
 } from "../recorridoTramite/RecorridoTramite"
 
+const CAPAS_OPCIONES: Array<{ key: keyof AnalysisLayers; label: string }> = [
+  { key: "parcela", label: "Parcela" },
+  { key: "codigoUrbanistico", label: "Código Urbanístico" },
+  { key: "usosSuelo", label: "Usos del suelo" },
+]
+
 export function MainStarted() {
   const { radius, setRadius, punto, consultaConfirmada, volverAConsulta } =
     useConsulta()
 
   const [visualRadius, setVisualRadius] = useState(radius)
   const [activeStep, setActiveStep] = useState(1)
-  const [capas, setCapas] = useState({
+  const [capas, setCapas] = useState<AnalysisLayers>({
     parcela: true,
     codigoUrbanistico: true,
     usosSuelo: false,
@@ -63,7 +70,6 @@ export function MainStarted() {
 
   return (
     <section className="flex min-h-screen w-full flex-col bg-[#FAFAFA] pb-20 text-slate-900">
-      {/* Barra superior */}
       <header className="w-full bg-white">
         <Nav />
       </header>
@@ -83,26 +89,26 @@ export function MainStarted() {
         />
 
         {/* Tarjeta flotante izquierda: Tu consulta */}
-        <div className="pointer-events-auto absolute left-6 top-6 z-10 w-[23rem] max-w-[calc(100vw-3rem)] rounded-xl border border-slate-200/90 bg-white/95 p-5 shadow-md backdrop-blur-xs lg:left-[20%]">
-          <p className="text-[10px] font-semibold uppercase tracking-wider text-[#035C80]">
+        <div className="pointer-events-auto absolute left-2.5 top-2.5 z-10 w-[calc(100vw-4.25rem)] max-w-[16.5rem] rounded-lg border border-slate-200/90 bg-white/95 p-2.5 shadow-md backdrop-blur-xs sm:left-4 sm:top-4 sm:max-w-[19.5rem] sm:rounded-xl sm:p-3.5 md:left-6 md:top-6 md:w-[23rem] md:max-w-[calc(100vw-3rem)] md:p-5 lg:left-[20%]">
+          <p className="text-[9px] font-semibold uppercase tracking-wider text-[#035C80] md:text-[10px]">
             Tu consulta
           </p>
-          <h1 className="mt-1 text-2xl font-bold text-slate-900">
+          <h1 className="mt-0.5 text-sm font-bold leading-snug text-slate-900 sm:text-base md:mt-1 md:text-2xl">
             {tituloConsulta}
           </h1>
 
-          <div className="mt-2 flex items-center gap-2 text-xs font-medium text-slate-800">
-            <span className="h-2 w-2 shrink-0 rounded-full bg-slate-900" />
-            <span>
+          <div className="mt-1 flex items-center gap-1.5 text-[11px] font-medium text-slate-800 md:mt-2 md:gap-2 md:text-xs">
+            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-slate-900 md:h-2 md:w-2" />
+            <span className="truncate">
               {direccionMostrada.toUpperCase().includes("CABA")
                 ? direccionMostrada
                 : `${direccionMostrada}, CABA`}
             </span>
           </div>
 
-          <div className="mt-3 flex flex-wrap items-center gap-2">
+          <div className="mt-1.5 flex flex-wrap items-center gap-1.5 md:mt-3 md:gap-2">
             <span
-              className={`rounded-md px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
+              className={`rounded-md px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide md:px-2 md:text-[10px] ${
                 esCompatible
                   ? "border border-emerald-600/80 bg-emerald-50/70 text-emerald-800"
                   : "border border-amber-600/80 bg-amber-50/70 text-amber-800"
@@ -110,7 +116,7 @@ export function MainStarted() {
             >
               {esCompatible ? "Ubicación compatible" : "Ubicación a verificar"}
             </span>
-            <span className="text-[11px] text-slate-600">
+            <span className="text-[10px] text-slate-600 md:text-[11px]">
               Rubro {rubroCodigo} · {rubroNombre}
             </span>
           </div>
@@ -118,75 +124,47 @@ export function MainStarted() {
           <button
             type="button"
             onClick={volverAConsulta}
-            className="mt-3 inline-flex cursor-pointer items-center gap-1 text-xs font-semibold text-[#035C80] hover:underline"
+            className="mt-1.5 inline-flex cursor-pointer items-center gap-1 text-[11px] font-semibold text-[#035C80] hover:underline md:mt-3 md:text-xs"
           >
             ← Volver a la consulta
           </button>
         </div>
 
         {/* Tarjeta flotante derecha: Capas del análisis */}
-        <div className="pointer-events-auto absolute bottom-6 right-6 z-10 w-52 rounded-xl border border-slate-200/90 bg-white/95 p-3.5 shadow-md backdrop-blur-xs">
-          <p className="text-[11px] font-bold text-slate-800">
+        <div className="pointer-events-auto absolute bottom-2.5 right-2.5 z-10 w-38 rounded-lg border border-slate-200/90 bg-white/95 p-2.5 shadow-md backdrop-blur-xs sm:bottom-4 sm:right-4 sm:w-44 sm:p-3 md:bottom-6 md:right-6 md:w-52 md:rounded-xl md:p-3.5">
+          <p className="text-[10px] font-bold text-slate-800 md:text-[11px]">
             Capas del análisis
           </p>
-          <div className="mt-2.5 flex flex-col gap-2 text-xs text-slate-700">
-            <label className="flex cursor-pointer select-none items-center gap-2">
-              <input
-                type="checkbox"
-                checked={capas.parcela}
-                onChange={(e) =>
-                  setCapas((c) => ({ ...c, parcela: e.target.checked }))
-                }
-                className="h-3.5 w-3.5 rounded accent-[#1D3343]"
-              />
-              <span className="h-2.5 w-2.5 shrink-0 rounded-xs border border-[#0f766e] bg-[#0d9488]/70" />
-              <span>Parcela</span>
-            </label>
-            <label className="flex cursor-pointer select-none items-center gap-2">
-              <input
-                type="checkbox"
-                checked={capas.codigoUrbanistico}
-                onChange={(e) =>
-                  setCapas((c) => ({
-                    ...c,
-                    codigoUrbanistico: e.target.checked,
-                  }))
-                }
-                className="h-3.5 w-3.5 rounded accent-[#1D3343]"
-              />
-              <span className="h-2.5 w-2.5 shrink-0 rounded-xs border border-[#4338ca] bg-[#6366f1]/70" />
-              <span>Código Urbanístico</span>
-            </label>
-            <label className="flex cursor-pointer select-none items-center gap-2">
-              <input
-                type="checkbox"
-                checked={capas.usosSuelo}
-                onChange={(e) =>
-                  setCapas((c) => ({ ...c, usosSuelo: e.target.checked }))
-                }
-                className="h-3.5 w-3.5 rounded accent-[#1D3343]"
-              />
-              <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#1a1a1a]" />
-              <span>Usos del suelo</span>
-            </label>
+          <div className="mt-1.5 flex flex-col gap-1.5 text-[10px] text-slate-700 sm:text-[11px] md:mt-2.5 md:gap-2 md:text-xs">
+            {CAPAS_OPCIONES.map(({ key, label }) => (
+              <label
+                key={key}
+                className="flex cursor-pointer select-none items-center gap-1.5 md:gap-2"
+              >
+                <input
+                  type="checkbox"
+                  checked={capas[key]}
+                  onChange={(e) =>
+                    setCapas((prev) => ({ ...prev, [key]: e.target.checked }))
+                  }
+                  className="h-3 w-3 rounded accent-[#1D3343] md:h-3.5 md:w-3.5"
+                />
+                <span>{label}</span>
+              </label>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Contenido principal */}
       <section className="mt-10 flex w-full flex-1 flex-col px-4 lg:flex-row lg:items-start lg:justify-center lg:px-0">
-        {/* Margen izquierdo (20%) */}
         <div className="hidden lg:block lg:w-[20%]" />
 
-        {/* Columna central (60%) */}
         <div className="flex w-full flex-col gap-10 lg:w-[60%]">
           <ResumeCase />
-
           <UbicResume data={consultaConfirmada} />
-
           <BeforeStart data={consultaConfirmada} />
 
-          {/* Sección Recorrido del trámite */}
           <section
             id="recorrido-tramite"
             className="flex w-full flex-col gap-4"
@@ -214,20 +192,17 @@ export function MainStarted() {
                 <FichaYFuenteColumn activeStep={activeStep} />
               </div>
 
-              {/* Tarjeta "¿Tenés una duda?" alineada al tope derecho en desktop */}
               <div className="hidden lg:absolute lg:left-[calc(100%+1.25rem)] lg:top-0 lg:block lg:w-[14rem] xl:w-[16rem]">
                 <DudaStepCard activeStep={activeStep} />
               </div>
             </div>
 
-            {/* Tarjeta de dudas en pantallas chicas/medianas */}
             <div className="mt-2 block lg:hidden">
               <DudaStepCard activeStep={activeStep} />
             </div>
           </section>
         </div>
 
-        {/* Margen derecho (20%) */}
         <div className="hidden lg:block lg:w-[20%]" />
       </section>
     </section>

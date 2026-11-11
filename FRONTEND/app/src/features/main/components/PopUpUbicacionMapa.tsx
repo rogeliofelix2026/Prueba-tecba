@@ -31,7 +31,7 @@ export function PopUpUbicacionMapa({
   }
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-[2px]">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/20 p-4">
       <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-6 text-left shadow-xl sm:p-8">
         {/* Encabezado */}
         <div className="flex items-center justify-between gap-3">

@@ -27,10 +27,10 @@ const openSans = Open_Sans({
 })
 
 export const metadata = {
-  title: "ARGENTINA EMPRENDE",
-  description: "Busuqueda de requisitos y ubicacion para negocios en toda argentina",
+  title: "TADiA",
+  description: "Orientación inteligente para trámites y actividades económicas en CABA",
   icons: {
-    icon: '/logo2.svg',
+    icon: "/tadia-icon.svg",
   },
 };
 

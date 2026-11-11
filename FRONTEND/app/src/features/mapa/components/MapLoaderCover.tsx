@@ -13,7 +13,7 @@ export function MapCoverLoader({ loading }: { loading: boolean }) {
         }
 
         const elapsed = Date.now() - startRef.current
-        const remaining = Math.max(0, 3000 - elapsed)
+        const remaining = Math.max(0, 600 - elapsed)
         const t = setTimeout(() => setVisible(false), remaining)
         return () => clearTimeout(t)
     }, [loading])
@@ -21,7 +21,7 @@ export function MapCoverLoader({ loading }: { loading: boolean }) {
     if (!visible) return null
 
     return (
-        <div className="absolute inset-0 z-30 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-white/35">
             <div className="flex flex-col items-center gap-3">
                 {/* Logo titilando */}
                 <div className="animate-pulse">

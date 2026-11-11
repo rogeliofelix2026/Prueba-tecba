@@ -10,7 +10,7 @@ export function FormularioConsulta() {
     return (
         <section className="flex flex-col w-[41%] min-w-0 gap-4">
             <h4 className="text-link text-sm">ORIENTACIÓN PARA ACTIVIDADES COMERCIALES</h4>
-            <h1 className="font-semibold text-4xl">ARGENTINA EMPRENDE</h1>
+            <h1 className="font-semibold text-4xl">TADiA</h1>
             <p>Contanos qué actividad querés realizar. Si ya tenés
                 una dirección, podés incluirla en la consulta o
                 buscarla directamente en el mapa.
