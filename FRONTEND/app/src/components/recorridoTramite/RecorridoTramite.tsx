@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { preguntarSobrePaso } from "../../features/main/actions"
+import { preguntarSobrePaso, type ContextoCasoIA } from "../../features/main/actions"
 
 type StepItem = {
   number: number
@@ -17,6 +17,7 @@ type StepItem = {
   fuenteDesc: string
   fuenteUrl: string
   evidenciaNormativa: { titulo: string; detalle: string; url?: string }[]
+  suggestedQuestions: string[]
 }
 
 const STEPS: StepItem[] = [
@@ -52,9 +53,14 @@ const STEPS: StepItem[] = [
       },
       {
         titulo: "Portal SSIT — Agencia Gubernamental de Control",
-        detalle: " Guía oficial de inicio del trámite online con usuario miBA nivel 3.",
+        detalle: "Guía oficial de inicio del trámite online con usuario miBA nivel 3.",
         url: "https://buenosaires.gob.ar/tramites/habilitacion-de-actividad-economica",
       },
+    ],
+    suggestedQuestions: [
+      "¿Es compatible mi ubicación para esta actividad?",
+      "¿Cómo obtengo miBA nivel 3?",
+      "¿Califico para la vía exprés?",
     ],
   },
   {
@@ -85,6 +91,10 @@ const STEPS: StepItem[] = [
         detalle: "Declaración de CUIT de persona física o jurídica solicitante.",
       },
     ],
+    suggestedQuestions: [
+      "¿Qué pasa si el titular es una sociedad (SRL/SA)?",
+      "¿Qué datos del CUIT me van a pedir?",
+    ],
   },
   {
     number: 3,
@@ -111,13 +121,18 @@ const STEPS: StepItem[] = [
     fuenteUrl: "https://buenosaires.gob.ar/tramites/habilitacion-de-actividad-economica",
     evidenciaNormativa: [
       {
-        titulo: "Código Urbanístico CABA — Cuadro de Usos",
+        titulo: "Código Urbanístico CABA — Cuadro de Usos 3.3",
         detalle: "Verificación de mixtura de uso del suelo y compatibilidad parcelaria.",
       },
       {
         titulo: "Anexo Técnico Profesional",
         detalle: "Requiere Número de Trámite y Código de Seguridad emitidos al guardar la ubicación.",
       },
+    ],
+    suggestedQuestions: [
+      "¿Qué lleva el Anexo Técnico?",
+      "¿Para qué sirve el Código de Seguridad?",
+      "¿Qué mixtura tiene mi ubicación?",
     ],
   },
   {
@@ -147,6 +162,10 @@ const STEPS: StepItem[] = [
         detalle: "Requisito obligatorio para la autorización de actividades económicas.",
       },
     ],
+    suggestedQuestions: [
+      "¿El CAA es obligatorio para mi rubro?",
+      "¿Cómo se tramita el Certificado de Aptitud Ambiental?",
+    ],
   },
   {
     number: 5,
@@ -175,8 +194,57 @@ const STEPS: StepItem[] = [
         detalle: "Que el comercio esté librado al uso permite operar pero no equivale por sí mismo al acto final de habilitación.",
       },
     ],
+    suggestedQuestions: [
+      "¿Qué significa estar librado al uso?",
+      "¿Cuándo puedo abrir al público?",
+    ],
   },
 ]
+
+function buildContextoCaso(data: any): ContextoCasoIA {
+  const territory = data?.territory ?? data
+  const mixturasArr =
+    territory?.urbanism?.mixturas ?? data?.compatibility?.mixturas
+  const mixtura =
+    territory?.mixturaUso ??
+    (Array.isArray(mixturasArr) && mixturasArr.length > 0
+      ? `Área de Alta Mixtura de Usos del Suelo ${mixturasArr.join(", ")}`
+      : "Área de Alta Mixtura de Usos del Suelo 4")
+
+  const rubroCodigo =
+    territory?.rubroCodigo ??
+    data?.activity?.code ??
+    data?.procedure_type_mapping?.activity_code ??
+    "1.5"
+  const rubroNombre =
+    data?.activity?.name ??
+    data?.procedure_type_mapping?.catalog_activity_name ??
+    "Alimentación general y gastronomía"
+
+  const compatible =
+    data?.compatibility?.status != null
+      ? data.compatibility.status === "compatible"
+      : (territory?.actividadCompatible ?? true)
+
+  return {
+    actividad:
+      data?.query?.activity_input ??
+      data?.activity?.name ??
+      (typeof data?.activity === "string" ? data.activity : "cafetería"),
+    direccion:
+      data?.location?.address_input ??
+      data?.query?.address_input ??
+      data?.address ??
+      "Av. Corrientes 2500, CABA",
+    plancheta: String(
+      territory?.plancheta ?? territory?.parcel?.smp ?? data?.location?.smp ?? "12"
+    ),
+    mixtura: String(mixtura),
+    rubro: `${rubroCodigo} · ${rubroNombre}`,
+    compatible,
+    superficieM2: data?.query?.parameters?.surface_m2 ?? data?.surface_m2 ?? null,
+  }
+}
 
 export function TimelineSteps({
   activeStep,
@@ -190,7 +258,6 @@ export function TimelineSteps({
 
   return (
     <div className="relative flex flex-col gap-3.5">
-      {/* Línea vertical conectora */}
       <div
         className="pointer-events-none absolute bottom-8 left-[13px] top-6 w-px bg-slate-200"
         aria-hidden="true"
@@ -203,7 +270,6 @@ export function TimelineSteps({
 
         return (
           <div key={step.number} className="relative flex items-start gap-3.5">
-            {/* Círculo numerado */}
             <button
               type="button"
               onClick={() => onSelectStep(step.number)}
@@ -217,7 +283,6 @@ export function TimelineSteps({
               {step.number}
             </button>
 
-            {/* Tarjeta del paso */}
             <div
               className={`min-w-0 flex-1 rounded-xl bg-white transition-all ${
                 isActive
@@ -225,21 +290,21 @@ export function TimelineSteps({
                   : "border border-slate-200 px-4 py-3.5 hover:border-slate-300"
               }`}
             >
-              {/* Encabezado del paso */}
               <button
                 type="button"
                 onClick={() => onSelectStep(step.number)}
                 className="flex w-full cursor-pointer items-start justify-between gap-3 text-left"
               >
-                <div className="flex flex-wrap items-center gap-2.5">
+                <div className="flex flex-wrap items-center gap-2">
                   <span
-                    className={`rounded-md px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
-                      isActive
-                        ? "border border-[#E5A93C] bg-[#FFF8EB] text-[#9A6700]"
-                        : "border border-slate-200 bg-slate-50 text-slate-500"
+                    className={`text-[10px] font-bold uppercase tracking-wider ${
+                      isActive ? "text-[#9A6700]" : "text-slate-500"
                     }`}
                   >
                     {isActive ? "Ahora" : "Después"}
+                  </span>
+                  <span className="text-slate-300" aria-hidden="true">
+                    ·
                   </span>
                   <h3 className="text-sm font-semibold text-slate-900">
                     {step.title}
@@ -251,7 +316,6 @@ export function TimelineSteps({
                 </span>
               </button>
 
-              {/* Descripción */}
               <p className="mt-2 text-xs leading-relaxed text-slate-600">
                 {step.description}
               </p>
@@ -262,18 +326,29 @@ export function TimelineSteps({
                 </p>
               ) : (
                 <div className="mt-3.5 space-y-3">
-                  {/* Etiquetas */}
-                  <div className="flex flex-wrap gap-2">
-                    {step.tags.map((tag) => (
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    {step.tags.map((tag, index) => (
                       <span
                         key={tag.label}
-                        className={`rounded-md px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide ${
-                          tag.variant === "success"
-                            ? "border border-emerald-600/70 bg-emerald-50/50 text-emerald-800"
-                            : "border border-slate-200 bg-white text-slate-700"
-                        }`}
+                        className="inline-flex items-center gap-2"
                       >
-                        {tag.label}
+                        {index > 0 && (
+                          <span
+                            className="text-[10px] text-slate-300"
+                            aria-hidden="true"
+                          >
+                            ·
+                          </span>
+                        )}
+                        <span
+                          className={`text-[10px] font-semibold uppercase tracking-wide ${
+                            tag.variant === "success"
+                              ? "text-emerald-700"
+                              : "text-slate-600"
+                          }`}
+                        >
+                          {tag.label}
+                        </span>
                       </span>
                     ))}
                   </div>
@@ -290,9 +365,12 @@ export function TimelineSteps({
                       }
                       className="flex w-full cursor-pointer items-center justify-between gap-2 px-3 py-2.5 text-left hover:bg-slate-100/70"
                     >
-                      <div className="flex items-center gap-2.5">
-                        <span className="rounded border border-slate-300 bg-white px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-700">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">
                           Qué necesitás
+                        </span>
+                        <span className="text-slate-300" aria-hidden="true">
+                          ·
                         </span>
                         <span className="text-xs font-semibold text-slate-800">
                           {step.queNecesitasTitle}
@@ -327,9 +405,12 @@ export function TimelineSteps({
                       }
                       className="flex w-full cursor-pointer items-center justify-between gap-2 px-3 py-2.5 text-left hover:bg-slate-100/70"
                     >
-                      <div className="flex items-center gap-2.5">
-                        <span className="rounded border border-sky-700/60 bg-sky-50/50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#035C80]">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#035C80]">
                           Qué obtenés
+                        </span>
+                        <span className="text-slate-300" aria-hidden="true">
+                          ·
                         </span>
                         <span className="text-xs font-semibold text-slate-800">
                           {step.queObtenesTitle}
@@ -347,7 +428,6 @@ export function TimelineSteps({
                     )}
                   </div>
 
-                  {/* Botones de acción */}
                   <div className="flex flex-wrap items-center gap-4 pt-1">
                     <a
                       href="https://buenosaires.gob.ar/tramites/habilitacion-de-actividad-economica"
@@ -376,9 +456,38 @@ export function TimelineSteps({
   )
 }
 
-export function FichaYFuenteColumn({ activeStep }: { activeStep: number }) {
+export function FichaYFuenteColumn({
+  activeStep,
+  data,
+}: {
+  activeStep: number
+  data?: any
+}) {
   const [evidenciaOpen, setEvidenciaOpen] = useState(false)
   const step = STEPS.find((s) => s.number === activeStep) ?? STEPS[0]
+
+  const backendEvidence = Array.isArray(data?.evidence)
+    ? data.evidence
+        .map((ev: any) => ({
+          titulo:
+            ev?.source_name ??
+            ev?.title ??
+            ev?.authority ??
+            "Fuente oficial integrada",
+          detalle:
+            ev?.excerpt ??
+            ev?.description ??
+            ev?.claim ??
+            "Dato verificado en el análisis territorial y normativo.",
+          url: ev?.url ?? ev?.source_url,
+        }))
+        .filter((ev: any) => ev.titulo)
+    : []
+
+  const evidenciasCombinadas = [
+    ...step.evidenciaNormativa,
+    ...backendEvidence.slice(0, 2),
+  ]
 
   return (
     <div className="flex flex-col gap-4">
@@ -396,13 +505,13 @@ export function FichaYFuenteColumn({ activeStep }: { activeStep: number }) {
         </div>
       </div>
 
-      {/* Fuente del paso activo */}
+      {/* Fuente del paso activo y trazabilidad */}
       <div className="rounded-xl border border-[#E5A93C] bg-white p-4 shadow-xs">
-        <span className="inline-block rounded-md border border-[#E5A93C] bg-[#FFF8EB] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#9A6700]">
+        <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#9A6700]">
           Fuente del paso {step.number}
         </span>
 
-        <h4 className="mt-2.5 text-xs font-bold text-slate-900">
+        <h4 className="mt-1.5 text-xs font-bold text-slate-900">
           {step.fuenteTitulo}
         </h4>
         <p className="mt-1 text-[11px] leading-relaxed text-slate-600">
@@ -420,7 +529,9 @@ export function FichaYFuenteColumn({ activeStep }: { activeStep: number }) {
 
         {/* Bloque Evidencia */}
         <div className="mt-3.5 rounded-lg bg-[#F1F5F9] p-3">
-          <p className="text-[10px] font-medium text-slate-500">Qué respalda</p>
+          <p className="text-[10px] font-medium text-slate-500">
+            Qué respalda ({evidenciasCombinadas.length} fuentes)
+          </p>
           <button
             type="button"
             onClick={() => setEvidenciaOpen((v) => !v)}
@@ -440,11 +551,13 @@ export function FichaYFuenteColumn({ activeStep }: { activeStep: number }) {
               {evidenciaOpen ? "−" : "+"}
             </span>
           </button>
-          <p className="mt-0.5 text-[11px] text-slate-600">Normativa relacionada</p>
+          <p className="mt-0.5 text-[11px] text-slate-600">
+            Normativa y fuentes integradas (GCBA / USIG / Código Urbanístico)
+          </p>
 
           {evidenciaOpen && (
             <div className="mt-2.5 space-y-2 border-t border-slate-200 pt-2.5">
-              {step.evidenciaNormativa.map((ev, i) => (
+              {evidenciasCombinadas.map((ev, i) => (
                 <div key={i} className="rounded bg-white p-2 text-[11px]">
                   <p className="font-semibold text-slate-800">{ev.titulo}</p>
                   <p className="mt-0.5 text-slate-600">{ev.detalle}</p>
@@ -468,7 +581,13 @@ export function FichaYFuenteColumn({ activeStep }: { activeStep: number }) {
   )
 }
 
-export function DudaStepCard({ activeStep }: { activeStep: number }) {
+export function DudaStepCard({
+  activeStep,
+  data,
+}: {
+  activeStep: number
+  data?: any
+}) {
   const [collapsed, setCollapsed] = useState(false)
   const [pregunta, setPregunta] = useState("")
   const [respuesta, setRespuesta] = useState<string | null>(null)
@@ -477,15 +596,22 @@ export function DudaStepCard({ activeStep }: { activeStep: number }) {
 
   const step = STEPS.find((s) => s.number === activeStep) ?? STEPS[0]
 
-  async function handleAsk(e: React.FormEvent) {
-    e.preventDefault()
-    if (!pregunta.trim()) return
+  async function submitQuestion(textoPregunta: string) {
+    const q = textoPregunta.trim()
+    if (!q) return
 
+    setPregunta(q)
     setLoading(true)
     setError(null)
     setRespuesta(null)
 
-    const res = await preguntarSobrePaso(pregunta, step.title, step.description)
+    const contextoCaso = buildContextoCaso(data)
+    const res = await preguntarSobrePaso(
+      q,
+      step.title,
+      step.description,
+      contextoCaso
+    )
     if (res.error) {
       setError(res.error)
     } else {
@@ -494,14 +620,26 @@ export function DudaStepCard({ activeStep }: { activeStep: number }) {
     setLoading(false)
   }
 
+  async function handleAsk(e: React.FormEvent) {
+    e.preventDefault()
+    await submitQuestion(pregunta)
+  }
+
   return (
-    <div className="w-full rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
+    <div className="w-full rounded-xl border border-[#035C80]/25 bg-white p-3.5 shadow-xs">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-xs font-bold text-slate-900">¿Tenés una duda?</h3>
+        <div>
+          <h3 className="text-[13px] font-bold leading-tight text-slate-900">
+            ¿Tenés una duda?
+          </h3>
+          <p className="text-[10px] font-medium text-[#035C80]">
+            Asistente IA · Paso {step.number}
+          </p>
+        </div>
         <button
           type="button"
           onClick={() => setCollapsed((v) => !v)}
-          className="flex h-5 w-5 cursor-pointer items-center justify-center text-slate-500 hover:text-slate-800"
+          className="flex h-5.5 w-5.5 cursor-pointer items-center justify-center rounded text-slate-500 hover:bg-slate-100 hover:text-slate-800"
           aria-label={collapsed ? "Expandir tarjeta de dudas" : "Minimizar tarjeta de dudas"}
         >
           {collapsed ? "+" : "−"}
@@ -510,26 +648,46 @@ export function DudaStepCard({ activeStep }: { activeStep: number }) {
 
       {!collapsed && (
         <>
-          <p className="mt-1 text-[11px] leading-relaxed text-slate-600">
-            Preguntá sobre el paso activo usando información oficial.
+          <p className="mt-1.5 text-[11px] leading-snug text-slate-600">
+            Preguntá sobre tu caso y el paso activo con respaldo oficial.
           </p>
 
-          <form onSubmit={handleAsk} className="mt-3">
+          <form onSubmit={handleAsk} className="mt-2.5 flex flex-col gap-2">
             <input
               type="text"
               value={pregunta}
               onChange={(e) => setPregunta(e.target.value)}
-              placeholder="Ej.: ¿qué lleva el Anexo Técnico?"
-              className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:border-[#035C80] focus:outline-none"
+              placeholder="Escribí tu consulta acá..."
+              className="w-full rounded-lg border border-slate-300 bg-[#F8FAFC] px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:border-[#035C80] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#035C80]/15"
             />
             <button
               type="submit"
               disabled={loading}
-              className="mt-2.5 cursor-pointer rounded-lg bg-[#1D3343] px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#142430] disabled:opacity-60"
+              className="w-full cursor-pointer rounded-lg bg-[#1D3343] px-3.5 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#142430] disabled:opacity-60"
             >
               {loading ? "Consultando..." : "Preguntar"}
             </button>
           </form>
+
+          {/* Preguntas sugeridas */}
+          <div className="mt-2.5">
+            <p className="mb-1 text-[9.5px] font-semibold uppercase tracking-wide text-slate-400">
+              Preguntas frecuentes
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {step.suggestedQuestions.map((sug) => (
+                <button
+                  key={sug}
+                  type="button"
+                  disabled={loading}
+                  onClick={() => submitQuestion(sug)}
+                  className="cursor-pointer rounded border border-slate-200 bg-slate-50 px-2 py-1 text-left text-[10.5px] font-medium text-[#035C80] transition-colors hover:border-[#035C80]/40 hover:bg-[#EDF4FF] disabled:opacity-60"
+                >
+                  {sug}
+                </button>
+              ))}
+            </div>
+          </div>
 
           {error && (
             <p className="mt-2.5 rounded-lg bg-red-50 p-2 text-[11px] text-red-700">
@@ -539,7 +697,10 @@ export function DudaStepCard({ activeStep }: { activeStep: number }) {
 
           {respuesta && (
             <div className="mt-3 rounded-lg border border-sky-100 bg-[#EDF4FF]/60 p-2.5 text-[11px] leading-relaxed text-slate-800">
-              {respuesta}
+              <p>{respuesta}</p>
+              <p className="mt-1.5 border-t border-sky-200/60 pt-1 text-[9.5px] font-medium text-[#035C80]">
+                Fuente: Normativa AGC / DGHP (SSIT) y Código Urbanístico CABA
+              </p>
             </div>
           )}
         </>
@@ -547,4 +708,3 @@ export function DudaStepCard({ activeStep }: { activeStep: number }) {
     </div>
   )
 }
-

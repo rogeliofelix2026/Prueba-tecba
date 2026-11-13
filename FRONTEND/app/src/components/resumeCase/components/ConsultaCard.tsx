@@ -43,7 +43,7 @@ export function ConsultaCard({ data }: ConsultaCardProps) {
   return (
     <article className="w-full rounded-lg border border-slate-200 bg-white p-3 sm:p-4 font-sans shadow-sm">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-        <span className="w-fit shrink-0 rounded-lg border border-sky-700 px-3 py-1.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-wide text-sky-800">
+        <span className="w-fit shrink-0 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-sky-800">
           Ubicación
         </span>
 

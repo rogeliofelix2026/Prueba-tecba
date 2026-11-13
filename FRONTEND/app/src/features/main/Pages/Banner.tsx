@@ -17,7 +17,7 @@ export function Banner() {
             />
           </div>
 
-          <span className="inline-flex w-fit max-w-[92%] items-center rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-[10px] font-medium tracking-wider text-white/80 backdrop-blur-sm sm:text-[11px]">
+          <span className="inline-flex w-fit max-w-[92%] items-center text-[10px] font-medium uppercase tracking-widest text-white/80 sm:text-[11px]">
             CONSULTAS SOBRE ACTIVIDADES ECONÓMICAS · CABA
           </span>
         </header>

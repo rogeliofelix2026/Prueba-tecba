@@ -7,10 +7,11 @@ export interface DatosConsulta {
 }
 
 export type ConsultaRespuesta = {
- query_id?: string
+  query_id?: string
   answer?: string
   activity?: string
   address?: string
+  surface_m2?: number | null
   location: {
     latitude: number
     longitude: number

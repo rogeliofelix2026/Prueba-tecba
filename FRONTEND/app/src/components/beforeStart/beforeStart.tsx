@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type BeforeStartProps = {
   data?: any
@@ -75,7 +75,23 @@ export default function BeforeStart({ data }: BeforeStartProps) {
   const [openRequisitos, setOpenRequisitos] = useState(false)
   const [openDocumentos, setOpenDocumentos] = useState(false)
 
-  const surfaceM2 = data?.query?.parameters?.surface_m2
+  const initialSurface =
+    data?.query?.parameters?.surface_m2 ?? data?.surface_m2 ?? null
+  const [customSurface, setCustomSurface] = useState<string>(
+    initialSurface ? String(initialSurface) : ""
+  )
+
+  useEffect(() => {
+    const s = data?.query?.parameters?.surface_m2 ?? data?.surface_m2 ?? null
+    setCustomSurface(s ? String(s) : "")
+  }, [data])
+
+  const parsedSurface = Number(customSurface)
+  const effectiveSurface =
+    Number.isFinite(parsedSurface) && parsedSurface > 0 ? parsedSurface : null
+
+  const esViaExpresPorM2 =
+    effectiveSurface != null ? effectiveSurface <= 200 : null
 
   return (
     <section className="flex w-full flex-col gap-2" aria-label="Antes de iniciar">
@@ -89,7 +105,7 @@ export default function BeforeStart({ data }: BeforeStartProps) {
       <div className="mt-2 flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-xs">
         {/* Condición de superficie */}
         <div className="flex flex-col gap-3 rounded-lg border border-[#F3DFB8] bg-[#FFF8EB] px-4 py-3.5 sm:flex-row sm:items-center">
-          <span className="w-fit shrink-0 rounded-md border border-[#D49B35] bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#9A6700]">
+          <span className="w-fit shrink-0 text-[10px] font-bold uppercase tracking-wider text-[#9A6700]">
             Condición
           </span>
 
@@ -98,13 +114,45 @@ export default function BeforeStart({ data }: BeforeStartProps) {
               La superficie puede cambiar el tipo de trámite
             </h3>
             <p className="mt-0.5 text-[11px] leading-relaxed text-slate-600">
-              Si el local no supera los 200 m² y cumple otras condiciones, puede corresponder la vía exprés.
+              {effectiveSurface == null
+                ? "Si el local no supera los 200 m² y cumple otras condiciones, puede corresponder la vía exprés."
+                : esViaExpresPorM2
+                  ? `Con ${effectiveSurface} m² (≤ 200 m²), tu local cumple el tope de superficie para la Vía Exprés.`
+                  : `Con ${effectiveSurface} m² (> 200 m²), supera el tope de Vía Exprés y requiere trámite con Plano de Uso.`}
             </p>
           </div>
 
-          <span className="w-fit shrink-0 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-700">
-            {surfaceM2 ? `${surfaceM2} m² informados` : "Dato no informado"}
-          </span>
+          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+            <label className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-[11px] text-slate-700">
+              <input
+                type="number"
+                min={1}
+                max={10000}
+                placeholder="Ej.: 120"
+                value={customSurface}
+                onChange={(e) => setCustomSurface(e.target.value)}
+                aria-label="Superficie del local en metros cuadrados"
+                className="w-14 bg-transparent text-xs font-semibold text-slate-900 placeholder:font-normal placeholder:text-slate-400 focus:outline-none"
+              />
+              <span className="text-[10px] font-medium text-slate-500">m²</span>
+            </label>
+
+            <span
+              className={`w-fit shrink-0 text-[10px] font-semibold uppercase tracking-wide ${
+                effectiveSurface == null
+                  ? "text-slate-600"
+                  : esViaExpresPorM2
+                    ? "text-emerald-800"
+                    : "text-amber-800"
+              }`}
+            >
+              {effectiveSurface == null
+                ? "Dato no informado"
+                : esViaExpresPorM2
+                  ? `${effectiveSurface} m² · Vía Exprés`
+                  : `${effectiveSurface} m² · Con Plano`}
+            </span>
+          </div>
         </div>
 
         {/* Requisitos desplegable */}
@@ -115,9 +163,12 @@ export default function BeforeStart({ data }: BeforeStartProps) {
             aria-expanded={openRequisitos}
             className="flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-slate-50"
           >
-            <div className="flex items-center gap-3">
-              <span className="shrink-0 rounded-md border border-slate-300 bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-700">
+            <div className="flex items-center gap-2.5">
+              <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-slate-600">
                 Requisitos
+              </span>
+              <span className="text-slate-300" aria-hidden="true">
+                ·
               </span>
               <span className="text-xs font-medium text-slate-800">
                 {REQUISITOS_BASE.length} datos base para empezar
@@ -136,8 +187,8 @@ export default function BeforeStart({ data }: BeforeStartProps) {
                     key={req.code}
                     className="flex items-start gap-2.5 rounded-lg border border-slate-200/80 bg-white p-3"
                   >
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-[#EDF4FF] text-[11px] font-semibold text-[#035C80]">
-                      {index + 1}
+                    <span className="shrink-0 text-xs font-bold text-[#035C80]">
+                      {index + 1}.
                     </span>
                     <div className="min-w-0">
                       <p className="text-xs font-semibold text-slate-900">{req.title}</p>
@@ -160,9 +211,12 @@ export default function BeforeStart({ data }: BeforeStartProps) {
             aria-expanded={openDocumentos}
             className="flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-slate-50"
           >
-            <div className="flex items-center gap-3">
-              <span className="shrink-0 rounded-md border border-sky-700/60 bg-sky-50/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#035C80]">
+            <div className="flex items-center gap-2.5">
+              <span className="shrink-0 text-[10px] font-bold uppercase tracking-wider text-[#035C80]">
                 Documentos
+              </span>
+              <span className="text-slate-300" aria-hidden="true">
+                ·
               </span>
               <span className="text-xs font-medium text-slate-800">
                 {DOCUMENTOS_BASE.length} documentos base + adicionales
@@ -187,7 +241,7 @@ export default function BeforeStart({ data }: BeforeStartProps) {
                     >
                       <div className="flex items-center justify-between gap-2">
                         <p className="text-xs font-semibold text-slate-900">{doc.title}</p>
-                        <span className="shrink-0 rounded bg-sky-50 px-2 py-0.5 text-[10px] font-semibold text-[#035C80]">
+                        <span className="shrink-0 text-[10px] font-semibold uppercase tracking-wide text-[#035C80]">
                           Base
                         </span>
                       </div>
@@ -204,20 +258,34 @@ export default function BeforeStart({ data }: BeforeStartProps) {
                   Documentación adicional (cuando corresponda)
                 </p>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                  {DOCUMENTOS_ADICIONALES.map((doc) => (
-                    <div
-                      key={doc.code}
-                      className="rounded-lg border border-dashed border-slate-200 bg-white/80 p-2.5"
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="text-xs font-medium text-slate-800">{doc.title}</p>
-                        <span className="shrink-0 rounded bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-800">
-                          Condicional
-                        </span>
+                  {DOCUMENTOS_ADICIONALES.map((doc) => {
+                    const requeridoPorSuperficie =
+                      doc.code === "PLANO_USO" && esViaExpresPorM2 === false
+                    return (
+                      <div
+                        key={doc.code}
+                        className={`rounded-lg border p-2.5 ${
+                          requeridoPorSuperficie
+                            ? "border-amber-400 bg-amber-50/40"
+                            : "border-dashed border-slate-200 bg-white/80"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <p className="text-xs font-medium text-slate-800">{doc.title}</p>
+                          <span
+                            className={`shrink-0 text-[10px] uppercase tracking-wide ${
+                              requeridoPorSuperficie
+                                ? "font-bold text-amber-900"
+                                : "font-semibold text-amber-800"
+                            }`}
+                          >
+                            {requeridoPorSuperficie ? "Requerido (>200 m²)" : "Condicional"}
+                          </span>
+                        </div>
+                        <p className="mt-0.5 text-[11px] text-slate-500">{doc.description}</p>
                       </div>
-                      <p className="mt-0.5 text-[11px] text-slate-500">{doc.description}</p>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             </div>
@@ -227,4 +295,3 @@ export default function BeforeStart({ data }: BeforeStartProps) {
     </section>
   )
 }
-

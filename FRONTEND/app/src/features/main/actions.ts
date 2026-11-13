@@ -8,14 +8,25 @@ const groq = new OpenAI({
 });
 
 // Caches en memoria
-const parseCache = new Map<string, { actividad: string; direccion: string }>();
+const parseCache = new Map<
+  string,
+  { actividad: string; direccion: string; superficie_m2?: number | null }
+>();
 const territoryCache = new Map<string, any>();
 
 export type ParseResult = {
   actividad: string;
   direccion: string;
+  superficie_m2?: number | null;
   error?: string;
 };
+
+function extractSurfaceM2FromText(texto: string): number | null {
+  const match = texto.match(/(\d+(?:[.,]\d+)?)\s*(?:m2|m²|metros\s*cuadrados|mts2|mts²)/i);
+  if (!match) return null;
+  const val = parseFloat(match[1].replace(",", "."));
+  return Number.isFinite(val) && val > 0 ? val : null;
+}
 
 export async function parseWithGroq(texto: string): Promise<ParseResult> {
   if (!texto?.trim()) {
@@ -24,27 +35,29 @@ export async function parseWithGroq(texto: string): Promise<ParseResult> {
 
   const key = texto.trim().toLowerCase();
 
-  // Cache hit
   if (parseCache.has(key)) {
     return parseCache.get(key)!;
   }
+
+  const regexSurface = extractSurfaceM2FromText(texto);
 
   try {
     const completion = await groq.chat.completions.create({
       model: "qwen/qwen3.8-27b",
       temperature: 0.1,
-      max_tokens: 120,
+      max_tokens: 150,
       response_format: { type: "json_object" },
       messages: [
         {
           role: "system",
-          content: `Extraé actividad y dirección. Devolvé solo este JSON:
-{"actividad":"tipo de negocio","direccion":"calle y número limpio"}
+          content: `Extraé actividad, dirección y superficie en m² (si se menciona). Devolvé solo este JSON:
+{"actividad":"tipo de negocio o vacío si no se menciona","direccion":"calle y número limpio o vacío si no se menciona","superficie_m2":null}
 
-Reglas para la dirección:
-- Sacá palabras como "al", "en", "número", etc.
-- Formato: "Corrientes 5000" o "Av. Corrientes 5000"
-- Sin "al" ni texto extra.`,
+Reglas:
+- Si el usuario no menciona actividad, devolvé "actividad": "".
+- Si el usuario no menciona dirección o calle con altura, devolvé "direccion": "".
+- En "direccion", sacá palabras como "al", "en", "número", etc. Formato: "Corrientes 5000" o "Av. Corrientes 5000".
+- Si menciona metros cuadrados (ej. "120 m2"), poné el número en "superficie_m2".`,
         },
         {
           role: "user",
@@ -55,13 +68,19 @@ Reglas para la dirección:
 
     const content = completion.choices[0]?.message?.content;
     if (!content) {
-      return { actividad: "", direccion: "", error: "Sin respuesta de Groq" };
+      return { actividad: "", direccion: "", error: "Sin respuesta del intérprete de IA" };
     }
 
     const parsed = JSON.parse(content);
+    const parsedSurface =
+      typeof parsed.superficie_m2 === "number" && parsed.superficie_m2 > 0
+        ? parsed.superficie_m2
+        : regexSurface;
+
     const result = {
       actividad: parsed.actividad?.trim() || "",
       direccion: parsed.direccion?.trim() || "",
+      superficie_m2: parsedSurface,
     };
 
     parseCache.set(key, result);
@@ -71,18 +90,19 @@ Reglas para la dirección:
     return {
       actividad: "",
       direccion: "",
-      error: err?.message || "Error al consultar Groq",
+      superficie_m2: regexSurface,
+      error: err?.message || "Error al interpretar la consulta",
     };
   }
 }
 
 export async function consultarTerritorioConDatos(
   actividad: string,
-  direccion: string
+  direccion: string,
+  superficieM2?: number | null
 ) {
-  const key = `${actividad.toLowerCase()}|${direccion.toLowerCase()}`;
+  const key = `${actividad.toLowerCase()}|${direccion.toLowerCase()}|${superficieM2 ?? ""}`;
 
-  // Cache hit
   if (territoryCache.has(key)) {
     return territoryCache.get(key);
   }
@@ -90,13 +110,19 @@ export async function consultarTerritorioConDatos(
   const backendUrl = process.env.BACKEND_URL;
   if (!backendUrl) throw new Error("BACKEND_URL no configurada");
 
+  const payload: Record<string, any> = {
+    activity: actividad,
+    address: direccion,
+  };
+  if (superficieM2 && superficieM2 > 0) {
+    payload.surface_m2 = superficieM2;
+    payload.parameters = { surface_m2: superficieM2 };
+  }
+
   const res = await fetch(`${backendUrl}/api/v1/territory`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      activity: actividad,
-      address: direccion,
-    }),
+    body: JSON.stringify(payload),
     cache: "no-store",
   });
 
@@ -129,38 +155,71 @@ export async function consultarTerritorioConDatos(
   }
 
   const data = await res.json();
+  if (superficieM2 && superficieM2 > 0) {
+    data.surface_m2 = superficieM2;
+    data.query = {
+      ...(data.query ?? {}),
+      parameters: {
+        ...(data.query?.parameters ?? {}),
+        surface_m2: data.query?.parameters?.surface_m2 ?? superficieM2,
+      },
+    };
+  }
   territoryCache.set(key, data);
   return data;
 }
 
+export type ContextoCasoIA = {
+  actividad?: string;
+  direccion?: string;
+  plancheta?: string;
+  mixtura?: string;
+  rubro?: string;
+  compatible?: boolean;
+  superficieM2?: number | null;
+};
+
 export async function preguntarSobrePaso(
   pregunta: string,
   pasoTitulo: string,
-  pasoDescripcion: string
+  pasoDescripcion: string,
+  contextoCaso?: ContextoCasoIA
 ): Promise<{ respuesta: string; error?: string }> {
   if (!pregunta?.trim()) {
     return { respuesta: "", error: "Escribí una consulta antes de enviar." };
   }
 
+  const bloqueContextoCaso = contextoCaso
+    ? `\nDatos del caso consultado por la persona:
+- Actividad: ${contextoCaso.actividad || "Cafetería / gastronomía"}
+- Ubicación: ${contextoCaso.direccion || "CABA"}
+- Plancheta / SMP: ${contextoCaso.plancheta || "12"}
+- Zonificación (Código Urbanístico): ${contextoCaso.mixtura || "Área de Alta Mixtura de Usos del Suelo 4"}
+- Rubro: ${contextoCaso.rubro || "1.5 · Alimentación general y gastronomía"}
+- Compatibilidad territorial en la ubicación: ${contextoCaso.compatible === false ? "Ubicación a verificar / no compatible en forma directa" : "Ubicación compatible con la actividad"}
+- Superficie declarada: ${contextoCaso.superficieM2 ? `${contextoCaso.superficieM2} m² (${contextoCaso.superficieM2 <= 200 ? "dentro del tope de 200 m² para vía exprés" : "supera los 200 m², requiere trámite con plano"})` : "No informada aún (el tope para vía exprés es 200 m²)"}`
+    : "";
+
   try {
     const completion = await groq.chat.completions.create({
       model: "qwen/qwen3.8-27b",
       temperature: 0.2,
-      max_tokens: 280,
+      max_tokens: 300,
       messages: [
         {
           role: "system",
-          content: `Sos un asistente orientativo del Gobierno de la Ciudad de Buenos Aires (GCBA) para el trámite "Habilitación de Actividad Económica" ante la Agencia Gubernamental de Control (AGC / DGHP).
-Respondé de forma breve, clara y basada únicamente en la información oficial:
-- Plataforma: SSIT con usuario y clave miBA nivel 3.
+          content: `Sos el asistente orientativo de TADiA (Sistema de Gestión Inteligente del GCBA) para el trámite "Habilitación de Actividad Económica" ante la Agencia Gubernamental de Control (AGC / DGHP).
+Respondé en español de forma breve, clara, accionable y basada únicamente en la información oficial integrada:
+- Plataforma: SSIT con usuario y clave miBA nivel 3 (trámite online y gratuito).
 - Vía exprés: locales de hasta 200 m² que cumplan condiciones de ubicación, accesibilidad, sin entrepisos, sin áreas especiales ni edificios catalogados, y sin inflamables/explosivos.
-- Documentación base: 1) Formulario de conformación de la unidad de uso (DDJJ de la actividad), 2) Anexo Técnico firmado por profesional responsable (incluye encomienda profesional, datos del profesional, información de unidad de uso, mixtura/área especial, croquis de ubicación y DDJJ de verificación del local).
-- Documentación adicional condicional: Certificado de sobrecarga, Plano de Uso de Actividad Económica, Autorización de Emplazamiento y documentación específica del rubro.
-- Al declarar la ubicación y guardar la solicitud se generan el Número de Trámite y el Código de Seguridad (indispensables para el Anexo Técnico).
-- Certificado de Aptitud Ambiental (CAA): se tramita en Impacto Ambiental.
-- Evaluación DGHP: puede aprobar, observar, rechazar o librar al uso (entrega oblea con QR y acceso al Libro de Registro de Inspecciones Digital; librado al uso permite operar pero no equivale a la habilitación definitiva).
-Paso activo actual: "${pasoTitulo}" (${pasoDescripcion}).
-No uses formato markdown complejo ni inventes requisitos fuera de esta base.`,
+- Documentación base obligatoria: 1) Formulario de conformación de la unidad de uso (DDJJ de la actividad), 2) Anexo Técnico firmado por profesional responsable (incluye encomienda profesional, datos del profesional, información de unidad de uso, mixtura/área especial, croquis de ubicación y DDJJ de verificación del local).
+- Documentación adicional condicional: Certificado de sobrecarga, Plano de Uso de Actividad Económica (para mayores a 200 m² o según rubro), Autorización de Emplazamiento y documentación específica del rubro.
+- Al declarar la ubicación y guardar la solicitud en el Paso 3 se generan el Número de Trámite y el Código de Seguridad (indispensables para el Anexo Técnico).
+- Certificado de Aptitud Ambiental (CAA): se tramita en Impacto Ambiental (Paso 4).
+- Evaluación DGHP (Paso 5): puede aprobar, observar, rechazar o librar al uso (entrega oblea con QR y acceso al Libro de Registro de Inspecciones Digital; librado al uso permite operar pero no equivale al acto final de habilitación).
+- Fuentes oficiales: AGC / DGHP (SSIT), Código Urbanístico (Ley 6.099 - Cuadro de Usos 3.3), USIG / Ciudad 3D y Resolución 96/AGC/25.
+Paso activo actual: "${pasoTitulo}" (${pasoDescripcion}).${bloqueContextoCaso}
+No inventes requisitos fuera de esta base oficial ni uses formato markdown complejo.`,
         },
         {
           role: "user",
@@ -218,13 +277,11 @@ export async function reverseGeocodeCoordenadas(
   lat: number,
   lng: number
 ): Promise<string> {
-  // 1. Geocoder reverso oficial de parcelas/puertas de USIG (devuelve calle y altura exacta en "puerta")
   const puertaExacta = await fetchUsigPuerta(lat, lng);
   if (puertaExacta) {
     return puertaExacta;
   }
 
-  // 2. Si el clic cayó sobre la calzada o esquina sin puerta directa, probar desplazamientos cortos (~15m) hacia las parcelas vecinas
   const offsets = [
     [0.00014, 0],
     [-0.00014, 0],
@@ -240,7 +297,6 @@ export async function reverseGeocodeCoordenadas(
     }
   }
 
-  // 3. Normalizador USIG por coordenadas (solo si incluye altura numérica, descartando cruces "Calle A y Calle B")
   try {
     const usigRes = await fetch(
       `https://servicios.usig.buenosaires.gob.ar/normalizar/?lng=${lng}&lat=${lat}`,
@@ -264,7 +320,6 @@ export async function reverseGeocodeCoordenadas(
     // Continuar con Nominatim
   }
 
-  // 4. Fallback con Nominatim (OpenStreetMap) con zoom de nivel edificio (18)
   try {
     const nomRes = await fetch(
       `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1&accept-language=es`,
@@ -339,4 +394,3 @@ Ejemplo: "abrir una cafetería" -> {"actividad":"cafetería"}`,
 
   return limpiarPrefijos(limpio) || limpio;
 }
-

@@ -10,6 +10,13 @@ import {
   reverseGeocodeCoordenadas,
 } from "../main/actions"
 
+function detectSurfaceM2(texto: string): number | null {
+  const match = texto.match(/(\d+(?:[.,]\d+)?)\s*(?:m2|m²|metros\s*cuadrados|mts2|mts²)/i)
+  if (!match) return null
+  const val = parseFloat(match[1].replace(",", "."))
+  return Number.isFinite(val) && val > 0 ? val : null
+}
+
 export function ConsultaProvider({ children }: { children: React.ReactNode }) {
   const [texto, setTexto] = useState("")
   const [cargando, setCargando] = useState(false)
@@ -35,7 +42,7 @@ export function ConsultaProvider({ children }: { children: React.ReactNode }) {
 
     const consultaLimpia = texto.trim();
     if (!consultaLimpia) {
-      setError("Por favor, ingresa qué trámite o actividad deseas realizar y la dirección.");
+      setError("Por favor, ingresá qué actividad deseás realizar y en qué dirección de la Ciudad.");
       return;
     }
 
@@ -45,19 +52,36 @@ export function ConsultaProvider({ children }: { children: React.ReactNode }) {
     setPendiente(null);
 
     try {
-      // Solo parseamos con Groq (sin llamar al backend todavía)
       const parsed = await parseWithGroq(consultaLimpia);
 
-      if (parsed.error || !parsed.actividad || !parsed.direccion) {
-        throw new Error(parsed.error || "No se pudo extraer actividad y dirección");
+      if (parsed.error) {
+        throw new Error(parsed.error);
       }
 
-      // Armamos un pendiente temporal solo con lo extraído
+      if (parsed.actividad && !parsed.direccion) {
+        throw new Error(
+          `Identificamos la actividad "${parsed.actividad}", pero falta la ubicación. Agregá la calle y altura en tu consulta (ej.: "${consultaLimpia} en Av. Corrientes 2500") o seleccioná el punto en el mapa de abajo.`
+        );
+      }
+
+      if (!parsed.actividad && parsed.direccion) {
+        throw new Error(
+          `Identificamos la dirección "${parsed.direccion}", pero falta indicar qué actividad comercial querés realizar (ej.: "Quiero abrir una cafetería en ${parsed.direccion}").`
+        );
+      }
+
+      if (!parsed.actividad || !parsed.direccion) {
+        throw new Error(
+          "Falta información para analizar el caso: indicá tanto la actividad comercial como la dirección (calle y altura en CABA)."
+        );
+      }
+
       setPendiente({
         query_id: "temp",
         answer: "",
         activity: parsed.actividad,
         address: parsed.direccion,
+        surface_m2: parsed.superficie_m2 ?? detectSurfaceM2(consultaLimpia),
         location: {
           latitude: 0,
           longitude: 0,
@@ -83,17 +107,25 @@ export function ConsultaProvider({ children }: { children: React.ReactNode }) {
     try {
       const actividad = pendiente.activity ?? "";
       const direccion = pendiente.address ?? "";
+      const superficieM2 = pendiente.surface_m2 ?? detectSurfaceM2(texto);
       const latGuardada = pendiente.location?.latitude;
       const lngGuardada = pendiente.location?.longitude;
 
       try {
-        // Ahora sí llamamos al backend
-        const respuesta = await consultarTerritorioConDatos(actividad, direccion);
+        const respuesta = await consultarTerritorioConDatos(
+          actividad,
+          direccion,
+          superficieM2
+        );
         const lat = respuesta?.location?.latitude || latGuardada;
         const lng = respuesta?.location?.longitude || lngGuardada;
 
         if (!lat || !lng) {
           throw new Error("No se encontraron coordenadas válidas");
+        }
+
+        if (superficieM2 && !respuesta.surface_m2) {
+          respuesta.surface_m2 = superficieM2;
         }
 
         setConsultaConfirmada(respuesta);
@@ -103,13 +135,12 @@ export function ConsultaProvider({ children }: { children: React.ReactNode }) {
         setConsultaIniciada(true);
         setPlacesRefreshKey((k) => k + 1);
       } catch (backendErr) {
-        // Si la ubicación vino directamente de un clic en el mapa (tiene coordenadas válidas),
-        // permitimos avanzar con esas coordenadas aunque la geocodificación textual falle
         if (latGuardada && lngGuardada) {
           setConsultaConfirmada({
             query_id: "mapa",
             activity: actividad,
             address: direccion,
+            surface_m2: superficieM2,
             location: {
               latitude: latGuardada,
               longitude: lngGuardada,
@@ -175,6 +206,7 @@ export function ConsultaProvider({ children }: { children: React.ReactNode }) {
 
       const actividad = actividadExtraida || actividadTexto.trim();
       const direccion = direccionFinal || `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+      const surfaceM2 = detectSurfaceM2(actividadTexto);
 
       setTexto(`${actividadTexto.trim()} en ${direccion}`);
       setUbicacionMapaModal(null);
@@ -184,6 +216,7 @@ export function ConsultaProvider({ children }: { children: React.ReactNode }) {
         answer: "",
         activity: actividad,
         address: direccion,
+        surface_m2: surfaceM2,
         location: {
           latitude: lat,
           longitude: lng,
@@ -207,7 +240,6 @@ export function ConsultaProvider({ children }: { children: React.ReactNode }) {
   async function updateMap() {
     if (!punto?.lat || !punto?.lng) return
 
-    // 1. Cambia las coordenadas (para probar que el mapa se mueve)
     const latPrueba = -34.6037 + Math.random() * 0.01
     const lngPrueba = -58.3816 + Math.random() * 0.01
 
@@ -216,16 +248,12 @@ export function ConsultaProvider({ children }: { children: React.ReactNode }) {
       lng: lngPrueba,
     })
 
-    // 2. Refresca los locales
     setPlacesRefreshKey((k) => k + 1)
 
     if (texto.trim()) {
       await onConsultar()
     }
-
   }
-
-
 
   function editar() {
     setPendiente(null)
@@ -234,14 +262,6 @@ export function ConsultaProvider({ children }: { children: React.ReactNode }) {
   function volverAConsulta() {
     setConsultaIniciada(false)
     setPendiente(null)
-  }
-
-  function actualizarMapa() {
-    if (!pendiente?.location) return
-    setPunto({
-      lat: pendiente.location.latitude,
-      lng: pendiente.location.longitude,
-    })
   }
 
   function cambiarTexto(value: string) {

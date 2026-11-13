@@ -219,9 +219,8 @@ export function StepCard({
       {tag && (
         <div className="mb-3">
           <span
-            className="inline-block rounded-md px-2.5 py-1"
+            className="inline-block"
             style={{
-              backgroundColor: colors.tagBg,
               color: colors.tagText,
               ...type.tag,
             }}

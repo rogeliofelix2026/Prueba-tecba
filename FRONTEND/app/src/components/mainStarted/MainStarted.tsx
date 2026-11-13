@@ -89,7 +89,7 @@ export function MainStarted() {
         />
 
         {/* Tarjeta flotante izquierda: Tu consulta */}
-        <div className="pointer-events-auto absolute left-2.5 top-2.5 z-10 w-[calc(100vw-4.25rem)] max-w-[16.5rem] rounded-lg border border-slate-200/90 bg-white/95 p-2.5 shadow-md backdrop-blur-xs sm:left-4 sm:top-4 sm:max-w-[19.5rem] sm:rounded-xl sm:p-3.5 md:left-6 md:top-6 md:w-[23rem] md:max-w-[calc(100vw-3rem)] md:p-5 lg:left-[20%]">
+        <div className="pointer-events-auto absolute left-2.5 top-2.5 z-10 w-[calc(100vw-4.25rem)] max-w-[16.5rem] rounded-lg border border-slate-200/90 bg-white/95 p-2.5 shadow-md backdrop-blur-xs sm:left-4 sm:top-4 sm:max-w-[19.5rem] sm:rounded-xl sm:p-3.5 md:left-6 md:top-6 md:w-[23rem] md:max-w-[calc(100vw-3rem)] md:p-5 lg:left-[8%] xl:left-[12%]">
           <p className="text-[9px] font-semibold uppercase tracking-wider text-[#035C80] md:text-[10px]">
             Tu consulta
           </p>
@@ -106,15 +106,16 @@ export function MainStarted() {
             </span>
           </div>
 
-          <div className="mt-1.5 flex flex-wrap items-center gap-1.5 md:mt-3 md:gap-2">
+          <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 md:mt-3">
             <span
-              className={`rounded-md px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide md:px-2 md:text-[10px] ${
-                esCompatible
-                  ? "border border-emerald-600/80 bg-emerald-50/70 text-emerald-800"
-                  : "border border-amber-600/80 bg-amber-50/70 text-amber-800"
+              className={`text-[10px] font-semibold uppercase tracking-wide md:text-[11px] ${
+                esCompatible ? "text-emerald-700" : "text-amber-700"
               }`}
             >
               {esCompatible ? "Ubicación compatible" : "Ubicación a verificar"}
+            </span>
+            <span className="text-[10px] text-slate-400 md:text-[11px]" aria-hidden="true">
+              ·
             </span>
             <span className="text-[10px] text-slate-600 md:text-[11px]">
               Rubro {rubroCodigo} · {rubroNombre}
@@ -156,13 +157,21 @@ export function MainStarted() {
         </div>
       </section>
 
-      {/* Contenido principal */}
-      <section className="mt-10 flex w-full flex-1 flex-col px-4 lg:flex-row lg:items-start lg:justify-center lg:px-0">
-        <div className="hidden lg:block lg:w-[20%]" />
-
-        <div className="flex w-full flex-col gap-10 lg:w-[60%]">
+      {/* Contenido principal con panel "¿Tenés una duda?" siempre a mano */}
+      <section className="mx-auto mt-8 flex w-full max-w-6xl flex-1 flex-col gap-8 px-4 sm:px-6 lg:mt-10 lg:flex-row lg:items-start">
+        {/* Columna principal de resultados */}
+        <div className="flex min-w-0 flex-1 flex-col gap-8">
           <ResumeCase />
           <UbicResume data={consultaConfirmada} />
+
+          {/* En mobile/tablet: "¿Tenés una duda?" visible arriba a mano antes de los acordeones largos */}
+          <div className="block lg:hidden">
+            <DudaStepCard
+              activeStep={activeStep}
+              data={consultaConfirmada}
+            />
+          </div>
+
           <BeforeStart data={consultaConfirmada} />
 
           <section
@@ -180,30 +189,31 @@ export function MainStarted() {
               </p>
             </div>
 
-            <div className="relative mt-1 grid grid-cols-1 items-start gap-5 lg:grid-cols-12">
-              <div className="lg:col-span-8">
+            <div className="mt-1 grid grid-cols-1 items-start gap-5 lg:grid-cols-12">
+              <div className="lg:col-span-7">
                 <TimelineSteps
                   activeStep={activeStep}
                   onSelectStep={setActiveStep}
                 />
               </div>
 
-              <div className="lg:col-span-4">
-                <FichaYFuenteColumn activeStep={activeStep} />
+              <div className="lg:col-span-5">
+                <FichaYFuenteColumn
+                  activeStep={activeStep}
+                  data={consultaConfirmada}
+                />
               </div>
-
-              <div className="hidden lg:absolute lg:left-[calc(100%+1.25rem)] lg:top-0 lg:block lg:w-[14rem] xl:w-[16rem]">
-                <DudaStepCard activeStep={activeStep} />
-              </div>
-            </div>
-
-            <div className="mt-2 block lg:hidden">
-              <DudaStepCard activeStep={activeStep} />
             </div>
           </section>
         </div>
 
-        <div className="hidden lg:block lg:w-[20%]" />
+        {/* Columna derecha fija (sticky) en desktop: "¿Tenés una duda?" visible desde el inicio y durante todo el scroll */}
+        <aside className="hidden lg:sticky lg:top-6 lg:block lg:w-64 xl:w-72 shrink-0">
+          <DudaStepCard
+            activeStep={activeStep}
+            data={consultaConfirmada}
+          />
+        </aside>
       </section>
     </section>
   )
